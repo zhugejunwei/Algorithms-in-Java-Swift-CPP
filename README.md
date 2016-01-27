@@ -1,5 +1,11 @@
-# Algorithms-in-C-
+#Basic Algorithms
+=====================================
+This is a self-traning project, implementing some basic algorithms with C++. I am planing to implement Huffman encoding, (quick, merge, heap, shell) sort and hashmap in C++ for now. Huffman encoding is heavily influenced by [Sophia Zhang](http://blog.csdn.net/abcjennifer/article/details/8020695).
 
-## Huffman encoding
+## Language
+* C++
+* I will do some exercise with _Swift_ in the near future.
 
-## Quick sort
+## Intention
+* strengthen my basic algorithm knowledge
+* enhance coding skill, especially in *C++* and *Swift*
