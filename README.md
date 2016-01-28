@@ -7,4 +7,4 @@ This is a self-traning project, implementing some basic algorithms with C++. I a
 
 ## Intention
 * strengthen my basic algorithm knowledge
-* enhance coding skill, especially in *C++* and *Swift*
+* enhance coding skills, especially in *C++* and *Swift*
