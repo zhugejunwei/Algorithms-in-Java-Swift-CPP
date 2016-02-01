@@ -4,6 +4,7 @@
 //
 //  Created by 诸葛俊伟 on 1/30/16.
 //  Copyright © 2016 诸葛俊伟. All rights reserved.
+//  Lastest modified on 2/1/2016.
 //
 
 #include <iostream>
@@ -20,18 +21,18 @@ void swap(int* x, int* y)
 
 void shell(int num[], int size)
 {
-    int gap, j;
+    int gap, j, i;
     for (gap = size/2; gap > 0; gap /= 2)
-        //for (i = gap; i < size; ++i)
-        for (j = 0; j <= size-gap+1 && num[j] > num [j+gap]; ++j)
-        {
-            swap(num[j], num[j+gap]);
-        }
+        for (i = gap; i < size; ++i)
+            for (j = i - gap; j >= 0 && num[j] > num[j+gap]; j -= gap)
+            {
+                swap(num[j], num[j+gap]);
+            }
 }
 
 int main()
 {
-    int num[] = {3,2,1,5,4,6,9,10};
+    int num[] = {3,2,1,5,4,6,1,10};
     int size = 8;
     cout<<"original array:"<<endl;
     for (int i = 0; i < size; ++i)
