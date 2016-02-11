@@ -10,93 +10,50 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <vector>
+#include <sstream> //stringstream
 
+// Tree Node
 struct BiTNode
 {
     char data;
     BiTNode *left;
     BiTNode *right;
     
-    BiTNode(): left(NULL), right(NULL), data(NULL){};
+    BiTNode(char c): left(NULL), right(NULL), data(c){}
+    BiTNode(const BiTNode *t): data(t->data), left(NULL), right(NULL){}
     ~BiTNode(){delete left; delete right;};
 };
 
-void AddBiTNode(BiTNode *, BiTNode *);
-void PreOrder(BiTNode *);
-void InOrder(BiTNode *);
-void PostOrder(BiTNode *);
-
-int main()
+// insert TreeNode
+void insert(struct BiTNode *&root, struct BiTNode *p)
 {
-    BiTNode *root, *a, *b, *c, *d, *e;
-    root = new BiTNode;
-    a = new BiTNode;
-    b = new BiTNode;
-    c = new BiTNode;
-    d = new BiTNode;
-    e = new BiTNode;
-    
-    a->data = 'a';
-    b->data = 'b';
-    c->data = 'c';
-    d->data = 'd';
-    e->data = 'e';
-    
-    root = a;
-    a->left = b;
-    a->right = c;
-    b->left = d;
-    b->right = e;
-    
-    std::cout<<"Recursive function of Binary Tree Traversal:\n";
-    
-    // Building a tree -- -- failed!!
-    //    std::cout<<"Please enter your data (end with space): \n";
-    //    std::cin>>ch;
-    //    t = NULL;
-    
-    //    while (ch != '\n') {
-    ////        if (p=(BiTNode *)malloc(sizeof(BiTNode))) {
-    //            p->data = ch;
-    //            p->left = NULL;
-    //            p->right = NULL;
-    ////        }
-    ////        else
-    ////        {
-    ////            std::cout<<"Memory allocated error!";
-    ////            exit(0);
-    ////        }
-    //        if (t == NULL)
-    //            t = p;
-    //        else
-    //            AddBiTNode(t,p);
-    ////        std::cin>>ch;
-    //    }
-    std::cout<<"PreOrder: \n";
-    PreOrder(root);
-    std::cout<<std::endl;
-    std::cout<<"InOrder: \n";
-    InOrder(root);
-    std::cout<<std::endl;
-    std::cout<<"PostOrder: \n";
-    PostOrder(root);
-    std::cout<<std::endl;
+    if((p->data <= root->data) && (root->left != NULL))
+        insert(root->left, p);
+    else if((p->data <= root->data) && (root->left == NULL))
+        root->left = p;
+    else if(root->right != NULL)
+        insert(root->right, p);
+    else root->right = p;
 }
 
+// build a tree
+BiTNode* createTree(std::vector<char>& vec)
+{
+    if(vec.size() == 0) return NULL;
+    BiTNode* root = new BiTNode(vec[0]);
+    std::vector<char>::const_iterator it = vec.begin();
+    ++it;
+    for (; it != vec.end(); ++it)
+    {
+        BiTNode *t = new BiTNode(* it);
+        insert(root, t);
+    }
+    return root;
+}
 
-// Building a tree -- -- failed!!
-//void AddBiTNode(struct BiTNode *t, struct BiTNode *p)
-//{
-//    if((p->data <= t->data) && (t->left != NULL))
-//        AddBiTNode(t->left, p);
-//    else if((p->data <= t->data) && (t->left == NULL))
-//        t->left = p;
-//    else if(t->right != NULL)
-//        AddBiTNode(t->right, p);
-//    else t->right = p;
-//}
-
-void PreOrder(struct BiTNode * root) //PreOrder Traversal
+//PreOrder Traversal
+void PreOrder(struct BiTNode * root)
 {
     if (root != NULL)
     {
@@ -106,6 +63,7 @@ void PreOrder(struct BiTNode * root) //PreOrder Traversal
     }
 }
 
+//InOrder Traversal
 void InOrder(struct BiTNode * root)
 {
     if (root != NULL)
@@ -116,6 +74,7 @@ void InOrder(struct BiTNode * root)
     }
 }
 
+//PostOrder Traversal
 void PostOrder(BiTNode * root)
 {
     if (root != NULL) {
@@ -125,3 +84,32 @@ void PostOrder(BiTNode * root)
     }
 }
 
+int main()
+{
+    std::vector<char> data;
+    char ch;
+    std::cout<<"Please enter your string:\n";
+    //    --------------------------------------------------/
+    //    This is a way to get a dynamic string through cin
+    //    --------------------------------------------------/
+    std::string vector_full_line;
+    std::getline(std::cin, vector_full_line);
+    std::stringstream vector_stream(vector_full_line);
+    for (vector_stream >> ch; vector_stream; vector_stream >> ch) {
+        data.push_back(ch);
+    }
+    
+    
+    BiTNode* root = createTree(data);
+    
+    std::cout<<"Recursive function of Binary Tree Traversal:\n";
+    std::cout<<"PreOrder: \n";
+    PreOrder(root);
+    std::cout<<std::endl;
+    std::cout<<"InOrder: \n";
+    InOrder(root);
+    std::cout<<std::endl;
+    std::cout<<"PostOrder: \n";
+    PostOrder(root);
+    std::cout<<std::endl;
+}
