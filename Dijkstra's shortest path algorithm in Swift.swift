@@ -1,6 +1,8 @@
 /*
- A swift program for Dijkstra's single source shortest path algorithm.
+ Description: A swift program for Dijkstra's single source shortest path algorithm.
  The program is for adjacency matrix representation of the graph.
+ 
+ Time complexity: O(v^2)
  */
 
 import Darwin
