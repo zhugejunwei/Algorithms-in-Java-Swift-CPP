@@ -25,12 +25,12 @@ int partition(int data[], int lo, int hi)
         if (data[right_p]<data[hi]) {
             ++left_p;
             swap(data[left_p], data[right_p]);
-        }
+        }  
 //    data[hi] = data[left_p+1];
 //    data[left_p+1] = key;
     swap(data[hi], data[left_p+1]);
     
-    return left_p+1;
+    return left_p + 1;
 }
 
 void QuickSort(int data[], int lo, int hi)
