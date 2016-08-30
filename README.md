@@ -6,5 +6,5 @@ This is a self-traning project, implementing some basic algorithms with C++ and 
 * Swift
 
 ## Intention
-* strengthen my basic algorithm knowledge
-* enhance coding skills, especially in *C++* and *Swift*
+* Strengthen my basic algorithm knowledge
+* Enhance coding skills, especially in *C++* and *Swift*
