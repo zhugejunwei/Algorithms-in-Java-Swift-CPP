@@ -7,12 +7,9 @@
 
 import Darwin
 
-// Number of vertices in the graph
-var V = 9
-
 // A utility function to find the vertex with minimum distance value, from
 // the set of vertices not yet included in shortest path tree.
-func minDistance(dist: [Int], _ sptSet: [Bool]) -> Int {
+func minDistance(_ dist: [Int], _ sptSet: [Bool], _ V: Int) -> Int {
     var min = Int.max
     var minIndex = 0
     
@@ -22,25 +19,30 @@ func minDistance(dist: [Int], _ sptSet: [Bool]) -> Int {
             minIndex = v
         }
     }
-    
     return minIndex
 }
 
 // A utility function to print the constructed distance array
-func printSolution (dist: [Int], _ n: Int) {
-    print("Vertex   Distance from Source")
-    for i in 0..<V {
+var srcNode = 0
+
+func printSolution (_ dist: [Int], _ n: Int) {
+    print("Vertex Distance from SourceNode \(srcNode)")
+    for i in 0..<n {
         print(i, dist[i])
     }
+    srcNode += 1
 }
 
 // Function that implements Dijkstra's single source shortest path algorithm
 // for a graph represented using adjacency matrix representation
-func dijkstra(graph: [[Int]], _ src: Int) {
-    var dist = Array(count: V, repeatedValue: Int.max) // The output array.  dist[i] will hold th shortest
+func dijkstra(_ graph: [[Int]], _ src: Int)
+{
+    let V = graph.count
+    
+    var dist = Array(repeating: Int.max, count: V) // The output array.  dist[i] will hold the shortest
     // distance from src to i
     
-    var sptSet = Array(count: V, repeatedValue: false) // sptSet[i] will true if vertex i is included in shortest
+    var sptSet = Array(repeating: false, count: V) // sptSet[i] will be true if vertex i is included in shortest
     // path tree or shortest distance from src to i is finalized
     
     // Distance of source vertex from itself is always 0
@@ -50,15 +52,14 @@ func dijkstra(graph: [[Int]], _ src: Int) {
     for _ in 0..<V-1
     {
         // Pick the minimum distance vertex from the set of vertices not yet processed.
-        // U is always equal to src in first iteration
-        let u = minDistance(dist, sptSet)
+        // u is always equal to src in first iteration
+        let u = minDistance(dist, sptSet, V)
         
         // Mark the picked vertex as processed
         sptSet[u] = true
         
         // Update dist value of the adjacent vertices of the picked vertex.
         for v in 0..<V {
-            
             // Update the distance values of adjacent vertices of picked vertex.
             // Only if 1. it is not in sptSet;
             // 2. there is an edge from u to v
@@ -68,8 +69,13 @@ func dijkstra(graph: [[Int]], _ src: Int) {
             }
         }
     }
-    
     printSolution(dist, V)
+}
+
+func allPairDijkstra(_ graph: [[Int]]) {
+    for k in 0..<graph.count {
+        dijkstra(graph, k)
+    }
 }
 
 let graph = [[0, 4, 0, 0, 0, 0, 0, 8, 0],
@@ -77,11 +83,9 @@ let graph = [[0, 4, 0, 0, 0, 0, 0, 8, 0],
              [0, 8, 0, 7, 0, 4, 0, 0, 2],
              [0, 0, 7, 0, 9, 14, 0, 0, 0],
              [0, 0, 0, 9, 0, 10, 0, 0, 0],
-             [0, 0, 4, 0, 10, 0, 2, 0, 0],
-             [0, 0, 0, 14, 0, 2, 0, 1, 6],
+             [0, 0, 4, 14, 10, 0, 2, 0, 0],
+             [0, 0, 0, 0, 0, 2, 0, 1, 6],
              [8, 11, 0, 0, 0, 0, 1, 0, 7],
-             [0, 0, 2, 0, 0, 0, 6, 7, 0]
-]
+             [0, 0, 2, 0, 0, 0, 6, 7, 0]]
 
-dijkstra(graph, 0)
-
+allPairDijkstra(graph)
