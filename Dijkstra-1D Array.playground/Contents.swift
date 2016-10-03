@@ -26,7 +26,7 @@ func print(_ dist: [Int], _ n: Int) {
 func dijkstra1D(_ graph: [Int], _ src: Int)
 {
     let V = Int(sqrt(Double(2 * graph.count))) + 1
-    var dist = Array(repeating: Int.max, count: V)
+    var dist = Array(repeating: Int(Int32.max), count: V)
     var sptSet = Array(repeating: false, count: V)
     dist[src] = 0
     for _ in 0..<V-1
@@ -36,13 +36,13 @@ func dijkstra1D(_ graph: [Int], _ src: Int)
         for v in 0..<V {
             let index = (17 - u)*u/2+v-u-1
             let temp = (17 - v)*v/2+u-v-1
-            if sptSet[v] == false && dist[u] != Int.max && dist[u] + graph[index] < dist[v] {
+            if sptSet[v] == false{
                 if u > v {
                     if graph[temp] > 0 && dist[u] + graph[temp] < dist[v] {
                         dist[v] = dist[u] + graph[temp]
                     }
                 } else if u < v {
-                    if graph[index] > 0 {
+                    if graph[index] > 0 && dist[u] + graph[index] < dist[v] {
                     dist[v] = dist[u] + graph[index]
                     }
                 }
@@ -59,5 +59,3 @@ func allPairDijktra(_ graph: [Int]) {
     }
 }
 
-let graph = [4, 0, 0, 0, 0, 0, 8, 0, 8, 0, 0, 0, 0, 11, 0, 7, 0, 4, 0, 0, 2, 9, 14, 0, 0, 0, 10, 0, 0, 0, 2, 0, 0, 1, 6, 7]
-allPairDijktra(graph)

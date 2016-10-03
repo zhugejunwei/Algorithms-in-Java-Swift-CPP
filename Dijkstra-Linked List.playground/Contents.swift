@@ -221,4 +221,4 @@ func allPairDijkstra(_ graph: Graph) {
     }
 }
 
-allPairDijkstra(graph)
+//allPairDijkstra(graph)
