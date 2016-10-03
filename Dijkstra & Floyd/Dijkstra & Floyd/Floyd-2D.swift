@@ -8,8 +8,9 @@
 
 import Foundation
 
-func floyd2D(_ n: Int, _ graph: [[Int]])
+func floyd2D(_ graph: [[Int]])
 {
+    let n = graph.count
     var dist = Array(repeating: Array(repeatElement(0, count: n)), count: n)
     for i in 0..<n {
         for j in 0..<n {
@@ -29,15 +30,15 @@ func floyd2D(_ n: Int, _ graph: [[Int]])
             }
         }
     }
-    print2(n, dist)
+//    print2(n, dist)
 }
 
-func print2(_ n: Int, _ dist: [[Int]]) {
-    for i in 0..<n {
-        for j in 0..<n {
-            print(dist[i][j], terminator:",")
-        }
-        print("\n")
-    }
-}
+//func print2(_ n: Int, _ dist: [[Int]]) {
+//    for i in 0..<n {
+//        for j in 0..<n {
+//            print(dist[i][j], terminator:",")
+//        }
+//        print("\n")
+//    }
+//}
 

@@ -31,15 +31,15 @@ func minDistance(_ dist: [Int], _ sptSet: [Bool], _ V: Int) -> Int {
 }
 
 // A utility function to print the constructed distance array
-var srcNode2 = 0
-
-func printSolution (_ dist: [Int], _ n: Int) {
-    print("Vertex Distance from SourceNode \(srcNode2)")
-    for i in 0..<n {
-        print(i, dist[i])
-    }
-    srcNode += 1
-}
+//var srcNode2 = 0
+//
+//func printSolution (_ dist: [Int], _ n: Int) {
+//    print("Vertex Distance from SourceNode \(srcNode2)")
+//    for i in 0..<n {
+//        print(i, dist[i])
+//    }
+//    srcNode += 1
+//}
 
 // Function that implements Dijkstra's single source shortest path algorithm
 // for a graph represented using adjacency matrix representation
@@ -78,7 +78,7 @@ func dijkstra2D(_ graph: [[Int]], _ src: Int)
             }
         }
     }
-    printSolution(dist, V)
+//    printSolution(dist, V)
 }
 
 func allPairDijkstra(_ graph: [[Int]]) {

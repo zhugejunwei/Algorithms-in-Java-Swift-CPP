@@ -10,13 +10,13 @@ import Foundation
 
 var srcNode3 = 0
 
-func print4(_ dist: [Int], _ n: Int) {
-    print("Vertex Distance from Source \(srcNode3)")
-    for i in 0..<n {
-        print(i, dist[i])
-    }
-    srcNode3 += 1
-}
+//func print4(_ dist: [Int], _ n: Int) {
+//    print("Vertex Distance from Source \(srcNode3)")
+//    for i in 0..<n {
+//        print(i, dist[i])
+//    }
+//    srcNode3 += 1
+//}
 
 func dijkstra1D(_ graph: [Int], _ src: Int)
 {
@@ -29,8 +29,8 @@ func dijkstra1D(_ graph: [Int], _ src: Int)
         let u = minDistance(dist, sptSet, V)
         sptSet[u] = true
         for v in 0..<V {
-            let index = (17 - u)*u/2+v-u-1
-            let temp = (17 - v)*v/2+u-v-1
+            let index = (2*V - 1 - u)*u/2+v-u-1
+            let temp = (2*V - 1 - v)*v/2+u-v-1
             if sptSet[v] == false && dist[u] != Int.max && dist[u] + graph[index] < dist[v] {
                 if u > v {
                     if graph[temp] > 0 && dist[u] + graph[temp] < dist[v] {
@@ -44,7 +44,7 @@ func dijkstra1D(_ graph: [Int], _ src: Int)
             }
         }
     }
-    print4(dist, V)
+//    print4(dist, V)
 }
 
 func allPairDijktra(_ graph: [Int]) {

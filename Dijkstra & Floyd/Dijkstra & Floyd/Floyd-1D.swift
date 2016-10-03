@@ -22,19 +22,19 @@ func floyd1D(_ graph: [Int])
             for j in 0..<n {
                 var ij = 0, ik = 0, kj = 0
                 if i < j {
-                    ij = (17-i)*i/2+j-i-1
+                    ij = (2*n-1-i)*i/2+j-i-1
                 } else if i > j {
-                    ij = (17-j)*j/2+i-j-1
+                    ij = (2*n-1-j)*j/2+i-j-1
                 }
                 if i < k {
-                    ik = (17-i)*i/2+k-i-1
+                    ik = (2*n-1-i)*i/2+k-i-1
                 } else if i > k {
-                    ik = (17-k)*k/2+i-k-1
+                    ik = (2*n-1-k)*k/2+i-k-1
                 }
                 if k < j {
-                    kj = (17-k)*k/2+j-k-1
+                    kj = (2*n-1-k)*k/2+j-k-1
                 } else if k > j {
-                    kj = (17-j)*j/2+k-j-1
+                    kj = (2*n-1-j)*j/2+k-j-1
                 }
                 guard ij != ik && ij != kj && ik != kj else {
                     break
@@ -43,23 +43,23 @@ func floyd1D(_ graph: [Int])
             }
         }
     }
-    print(n, dist)
+//    print(n, dist)
 }
 
-func print(_ n: Int, _ dist: [Int]) {
-    var dist = dist
-    var n = n - 1
-    var m = n
-    for i in 0..<dist.count {
-        if i == n {
-            print("\n")
-            m -= 1
-            n += m
-        }
-        if dist[i] == Int(Int32.max) {
-            dist[i] = 0
-        }
-        print(dist[i], terminator:",")
-    }
-}
+//func print(_ n: Int, _ dist: [Int]) {
+//    var dist = dist
+//    var n = n - 1
+//    var m = n
+//    for i in 0..<dist.count {
+//        if i == n {
+//            print("\n")
+//            m -= 1
+//            n += m
+//        }
+//        if dist[i] == Int(Int32.max) {
+//            dist[i] = 0
+//        }
+//        print(dist[i], terminator:",")
+//    }
+//}
 

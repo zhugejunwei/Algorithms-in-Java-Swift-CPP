@@ -28,7 +28,7 @@ struct TestCases {
                      [0, 0, 0, 5, 0, 0, 8,  0,15,  0, 0, 0],
                      [0, 0, 9, 13, 0, 0,11, 0, 0,14,  0, 0]]
     
-    static func complete(_ n: Int) -> [[Int]]
+    func complete(_ n: Int) -> [[Int]]
     {
         var completeGraph = Array(repeating: Array(repeatElement(0, count: n)), count:n)
         for i in 0..<n {
@@ -41,7 +41,7 @@ struct TestCases {
         return completeGraph
     }
     
-    static func sparse(_ n: Int) -> [[Int]]
+    func sparse(_ n: Int) -> [[Int]]
     {
         var sparseGraph = Array(repeating: Array(repeatElement(0, count: n)), count:n)
         var chosenNodes = Array(repeating: false, count: n)
@@ -65,7 +65,7 @@ struct TestCases {
         return sparseGraph
     }
     
-    static func completeLinkedList(_ n: Int) -> Graph {
+    func completeLinkedList(_ n: Int) -> Graph {
         let array = complete(n)
         var graph = createGraph(n)
         for i in 0..<n {
@@ -76,7 +76,7 @@ struct TestCases {
         return graph
     }
     
-    static func sparseLinkedList(_ n: Int) -> Graph {
+    func sparseLinkedList(_ n: Int) -> Graph {
         let array = sparse(n)
         var graph = createGraph(n)
         for i in 0..<n {
@@ -89,7 +89,7 @@ struct TestCases {
         return graph
     }
     
-    static func complete1D(_ n: Int) -> [Int] {
+    func complete1D(_ n: Int) -> [Int] {
         var res = [Int]()
         let array = complete(n)
         for i in 0..<n {
@@ -100,7 +100,7 @@ struct TestCases {
         return res
     }
     
-    static func sparse1D(_ n: Int) -> [Int] {
+    func sparse1D(_ n: Int) -> [Int] {
         var res = [Int]()
         let array = sparse(n)
         for i in 0..<n {
@@ -111,7 +111,7 @@ struct TestCases {
         return res
     }
     
-    static func LinkedList(_ graphArray: [[Int]]) -> Graph
+    func LinkedList(_ graphArray: [[Int]]) -> Graph
     {
         let n = graphArray.count
         var graph = createGraph(n)
@@ -124,6 +124,5 @@ struct TestCases {
         }
         return graph
     }
-
 }
 

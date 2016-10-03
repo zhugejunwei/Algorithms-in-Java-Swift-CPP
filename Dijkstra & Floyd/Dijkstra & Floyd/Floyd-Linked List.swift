@@ -41,14 +41,14 @@ func floydLinkedList(_ graph: Graph) {
             }
         }
     }
-    print3(V, dist)
+//    print3(V, dist)
 }
 
-func print3(_ n: Int, _ dist: [[Int]]) {
-    for i in 0..<n {
-        for j in 0..<n {
-            print(dist[i][j], terminator:",")
-        }
-        print("\n")
-    }
-}
+//func print3(_ n: Int, _ dist: [[Int]]) {
+//    for i in 0..<n {
+//        for j in 0..<n {
+//            print(dist[i][j], terminator:",")
+//        }
+//        print("\n")
+//    }
+//}

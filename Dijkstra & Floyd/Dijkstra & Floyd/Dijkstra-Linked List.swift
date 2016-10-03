@@ -111,13 +111,13 @@ func isInMinHeap(_ minHeap: MinHeap, _ v: Int) -> Bool {
 
 var srcNode = 0
 
-func print1(_ dist: [Int], _ n: Int) {
-    print("Vertex Distance from Source \(srcNode)")
-    for i in 0..<n {
-        print("\t \(i) \t \(dist[i])")
-    }
-    srcNode += 1
-}
+//func print1(_ dist: [Int], _ n: Int) {
+//    print("Vertex Distance from Source \(srcNode)")
+//    for i in 0..<n {
+//        print("\t \(i) \t \(dist[i])")
+//    }
+//    srcNode += 1
+//}
 
 // MARK: - The Main Function, O(ELogV)
 
@@ -151,7 +151,7 @@ func dijkstraLinkedList(_ graph: Graph, _ src: Int) {
             pCrawl = pCrawl?.next
         }
     }
-    print1(dist, V)
+//    print1(dist, V)
 }
 
 func allPairDijkstra(_ graph: Graph) {
