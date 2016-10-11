@@ -111,18 +111,26 @@ func isInMinHeap(_ minHeap: MinHeap, _ v: Int) -> Bool {
 
 var srcNode = 0
 
-//func print1(_ dist: [Int], _ n: Int) {
-//    print("Vertex Distance from Source \(srcNode)")
-//    for i in 0..<n {
-//        print("\t \(i) \t \(dist[i])")
+//func printPath(_ parent: [Int], _ j: Int) {
+//    if parent[j] == -1 { return }
+//    printPath(parent, parent[j])
+//    print(j, terminator: " ")
+//}
+//
+//func printSolution(_ dist: [Int],_ n: Int,_ parent: [Int], _ src: Int)
+//{
+//    for i in 1..<n
+//    {
+//        print("\n\(src) -> \(i) \t\t \(dist[i])\t\t \(src)", terminator: " ");
+//        printPath(parent, i);
 //    }
-//    srcNode += 1
 //}
 
 // MARK: - The Main Function, O(ELogV)
 
 func dijkstraLinkedList(_ graph: Graph, _ src: Int) {
     let V = graph.V
+    var parent = Array(repeating: -1, count: V)
     var dist = Array(repeating: Int.max, count: V)
     var minHeap = createMinHeap(V)
     for v in 0..<V {
@@ -146,12 +154,13 @@ func dijkstraLinkedList(_ graph: Graph, _ src: Int) {
             let v = pCrawl?.dest
             if isInMinHeap(minHeap, v!) && dist[u!] != Int.max && (pCrawl?.weight)! + dist[u!] < dist[v!] {
                 dist[v!] = dist[u!] + (pCrawl?.weight)!
+                parent[v!]  = u!
                 decreaseDist(&minHeap, v!, dist[v!])
             }
             pCrawl = pCrawl?.next
         }
     }
-//    print1(dist, V)
+//    printSolution(dist, V, parent, src)
 }
 
 func allPairDijkstra(_ graph: Graph) {

@@ -10,18 +10,26 @@ import Foundation
 
 var srcNode3 = 0
 
-//func print4(_ dist: [Int], _ n: Int) {
-//    print("Vertex Distance from Source \(srcNode3)")
-//    for i in 0..<n {
-//        print(i, dist[i])
+//func printPath(_ parent: [Int], _ j: Int) {
+//    if parent[j] == -1 { return }
+//    printPath(parent, parent[j])
+//    print(j, terminator: " ")
+//}
+//var V = 5
+//func printSolution(_ dist: [Int],_ n: Int,_ parent: [Int], _ src: Int)
+//{
+//    for i in 1..<V
+//    {
+//        print("\n\(src) -> \(i) \t\t \(dist[i])\t\t \(src)", terminator: " ");
+//        printPath(parent, i);
 //    }
-//    srcNode3 += 1
 //}
 
 func dijkstra1D(_ graph: [Int], _ src: Int)
 {
     let V = Int(sqrt(Double(2 * graph.count))) + 1
-    var dist = Array(repeating: Int.max, count: V)
+    var parent = Array(repeating: -1, count: V)
+    var dist = Array(repeating: Int(Int32.max), count: V)
     var sptSet = Array(repeating: false, count: V)
     dist[src] = 0
     for _ in 0..<V-1
@@ -29,22 +37,24 @@ func dijkstra1D(_ graph: [Int], _ src: Int)
         let u = minDistance(dist, sptSet, V)
         sptSet[u] = true
         for v in 0..<V {
-            let index = (2*V - 1 - u)*u/2+v-u-1
-            let temp = (2*V - 1 - v)*v/2+u-v-1
-            if sptSet[v] == false && dist[u] != Int.max && dist[u] + graph[index] < dist[v] {
+            let index = (2*V-1 - u)*u/2+v-u-1
+            let temp = (2*V-1 - v)*v/2+u-v-1
+            if sptSet[v] == false{
                 if u > v {
                     if graph[temp] > 0 && dist[u] + graph[temp] < dist[v] {
+                        parent[v]  = u
                         dist[v] = dist[u] + graph[temp]
                     }
                 } else if u < v {
-                    if graph[index] > 0 {
+                    if graph[index] > 0 && dist[u] + graph[index] < dist[v] {
+                        parent[v]  = u
                         dist[v] = dist[u] + graph[index]
                     }
                 }
             }
         }
     }
-//    print4(dist, V)
+//    printSolution(dist, V, parent, src)
 }
 
 func allPairDijktra(_ graph: [Int]) {
@@ -53,4 +63,3 @@ func allPairDijktra(_ graph: [Int]) {
         dijkstra1D(graph, k)
     }
 }
-

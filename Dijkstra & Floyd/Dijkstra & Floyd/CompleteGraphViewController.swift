@@ -13,12 +13,14 @@ class CompleteGraphViewController: UIViewController, ChartViewDelegate
 {
     // MARK: - Properties
     
+//    var spinner: UIActivityIndicatorView?
+    
     let testcase = TestCases()
     // calculate the time interval
     var start = Date(), end = Date(), timer:Double = 0.0
     
     // x
-    let node = [10, 30, 40, 50, 100]
+    let node = [10, 30, 40, 50, 100, 200, 500]
     
     // graphs
     var comp2D: [[[Int]]] {
@@ -120,16 +122,21 @@ class CompleteGraphViewController: UIViewController, ChartViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        
+//        spinner?.activityIndicatorViewStyle = .gray
+//        spinner?.center = view.center
+//        spinner?.startAnimating()
+//        view.addSubview(spinner!)
+        
         self.createLineChartView()
-        self.setChart()
+        
         self.createRightBarButtonItem()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        chartView.animate(yAxisDuration: 1.0, easingOption: .easeInBounce)
+        self.setChart()
+//        chartView.animate(yAxisDuration: 1.0, easingOption: .easeInBounce)
     }
     
     fileprivate func createRightBarButtonItem()
@@ -161,12 +168,12 @@ class CompleteGraphViewController: UIViewController, ChartViewDelegate
     
     fileprivate func setChart()
     {
+//        spinner?.startAnimating()
         let data = LineChartData()
-        
         // Dijkstra - 2D
         var de1: [ChartDataEntry] = []
-        for i in 0..<node.count {
-            let dataEntry = ChartDataEntry(x: Double(node[i]), y: dij2DTime[i])
+        for i in 0..<self.node.count {
+            let dataEntry = ChartDataEntry(x: Double(self.node[i]), y: self.dij2DTime[i])
             de1.append(dataEntry)
         }
         let ds1 = LineChartDataSet(values: de1, label: "Dij2D")
@@ -175,8 +182,8 @@ class CompleteGraphViewController: UIViewController, ChartViewDelegate
         
         // Dijkstra - 1D
         var de2: [ChartDataEntry] = []
-        for i in 0..<node.count {
-            let dataEntry = ChartDataEntry(x: Double(node[i]), y: dij1DTime[i])
+        for i in 0..<self.node.count {
+            let dataEntry = ChartDataEntry(x: Double(self.node[i]), y: self.dij1DTime[i])
             de2.append(dataEntry)
         }
         let ds2 = LineChartDataSet(values: de2, label: "Dij1D")
@@ -185,8 +192,8 @@ class CompleteGraphViewController: UIViewController, ChartViewDelegate
         
         // Dijkstra - LinkedList
         var de3: [ChartDataEntry] = []
-        for i in 0..<node.count {
-            let dataEntry = ChartDataEntry(x: Double(node[i]), y: dijLinkTime[i])
+        for i in 0..<self.node.count {
+            let dataEntry = ChartDataEntry(x: Double(self.node[i]), y: self.dijLinkTime[i])
             de3.append(dataEntry)
         }
         let ds3 = LineChartDataSet(values: de3, label: "DijLink")
@@ -195,8 +202,8 @@ class CompleteGraphViewController: UIViewController, ChartViewDelegate
         
         // Floyd - 2D
         var de4: [ChartDataEntry] = []
-        for i in 0..<node.count {
-            let dataEntry = ChartDataEntry(x: Double(node[i]), y: floy2DTime[i])
+        for i in 0..<self.node.count {
+            let dataEntry = ChartDataEntry(x: Double(self.node[i]), y: self.floy2DTime[i])
             de4.append(dataEntry)
         }
         let ds4 = LineChartDataSet(values: de4, label: "Floy2D")
@@ -205,8 +212,8 @@ class CompleteGraphViewController: UIViewController, ChartViewDelegate
         
         // Floyd - 1D
         var de5: [ChartDataEntry] = []
-        for i in 0..<node.count {
-            let dataEntry = ChartDataEntry(x: Double(node[i]), y: floy1DTime[i])
+        for i in 0..<self.node.count {
+            let dataEntry = ChartDataEntry(x: Double(self.node[i]), y: self.floy1DTime[i])
             de5.append(dataEntry)
         }
         let ds5 = LineChartDataSet(values: de5, label: "Floy1D")
@@ -215,8 +222,8 @@ class CompleteGraphViewController: UIViewController, ChartViewDelegate
         
         // Floyd - Lined List
         var de6: [ChartDataEntry] = []
-        for i in 0..<node.count {
-            let dataEntry = ChartDataEntry(x: Double(node[i]), y: floyLinkTime[i])
+        for i in 0..<self.node.count {
+            let dataEntry = ChartDataEntry(x: Double(self.node[i]), y: self.floyLinkTime[i])
             de6.append(dataEntry)
         }
         let ds6 = LineChartDataSet(values: de6, label: "FloyLink")
@@ -224,11 +231,8 @@ class CompleteGraphViewController: UIViewController, ChartViewDelegate
         data.addDataSet(ds6)
         
         self.chartView.data = data
-        
         self.chartView.gridBackgroundColor = NSUIColor.white
-        
         self.chartView.chartDescription?.text = "Time Performance - Complete Graph"
-        
         // Color API
         // ChartColorTemplates.liberty()
         // ChartColorTemplates.joyful()

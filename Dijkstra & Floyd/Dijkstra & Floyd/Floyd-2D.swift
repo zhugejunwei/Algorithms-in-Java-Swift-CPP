@@ -12,6 +12,7 @@ func floyd2D(_ graph: [[Int]])
 {
     let n = graph.count
     var dist = Array(repeating: Array(repeatElement(0, count: n)), count: n)
+    var path = Array(repeating: Array(repeatElement(0, count: n)), count: n)
     for i in 0..<n {
         for j in 0..<n {
             if i == j {
@@ -26,19 +27,35 @@ func floyd2D(_ graph: [[Int]])
     for k in 0..<n {
         for i in 0..<n {
             for j in 0..<n {
-                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+                if dist[i][k] + dist[k][j] < dist[i][j] {
+                    path[i][j] = k
+                    dist[i][j] = dist[i][k] + dist[k][j]
+                }
             }
         }
     }
-//    print2(n, dist)
+//    return path
 }
 
-//func print2(_ n: Int, _ dist: [[Int]]) {
+//var p = [[Int]]()
+//
+//func path(_ q: Int, _ r: Int) {
+//    if p[q][r] != 0 {
+//        path(q, p[q][r])
+//        print("v\(p[q][r])", terminator: " ")
+//        path(p[q][r], r)
+//    }
+//}
+//
+//func printPath(_ n: Int) {
 //    for i in 0..<n {
 //        for j in 0..<n {
-//            print(dist[i][j], terminator:",")
+//            if i != j {
+//                print("The path from \(i) -> \(j):", terminator: "  ")
+//                path(i, j)
+//                print("\n")
+//            }
 //        }
-//        print("\n")
 //    }
 //}
 

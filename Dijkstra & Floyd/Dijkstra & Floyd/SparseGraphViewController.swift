@@ -18,7 +18,7 @@ class SparseGraphViewController: UIViewController, ChartViewDelegate
     var start = Date(), end = Date(), timer:Double = 0.0
     
     // x
-    let node = [10, 20, 40, 100, 200]
+    let node = [10, 20, 40, 100, 200, 500]
     
     // graphs
     var spars2D: [[[Int]]] {

@@ -15,8 +15,8 @@
 
 import Foundation
 
-// A utility function to find the vertex with minimum distance value, from
-// the set of vertices not yet included in shortest path tree.
+// Function that implements Dijkstra's single source shortest path algorithm
+// for a graph represented using adjacency matrix representation
 func minDistance(_ dist: [Int], _ sptSet: [Bool], _ V: Int) -> Int {
     var min = Int.max
     var minIndex = 0
@@ -29,24 +29,28 @@ func minDistance(_ dist: [Int], _ sptSet: [Bool], _ V: Int) -> Int {
     }
     return minIndex
 }
-
-// A utility function to print the constructed distance array
-//var srcNode2 = 0
 //
-//func printSolution (_ dist: [Int], _ n: Int) {
-//    print("Vertex Distance from SourceNode \(srcNode2)")
-//    for i in 0..<n {
-//        print(i, dist[i])
+//func printPath(_ parent: [Int], _ j: Int) {
+//    if parent[j] == -1 { return }
+//    printPath(parent, parent[j])
+//    print(j, terminator: " ")
+//}
+//
+//func printSolution(_ dist: [Int],_ n: Int,_ parent: [Int], _ src: Int)
+//{
+//    for i in 1..<n
+//    {
+//        print("\n\(src) -> \(i) \t\t \(dist[i])\t\t \(src)", terminator: " ");
+//        printPath(parent, i);
 //    }
-//    srcNode += 1
 //}
 
 // Function that implements Dijkstra's single source shortest path algorithm
 // for a graph represented using adjacency matrix representation
-func dijkstra2D(_ graph: [[Int]], _ src: Int)
+func dijkstra(_ graph: [[Int]], _ src: Int)
 {
     let V = graph.count
-    
+    var parent = Array(repeating: -1, count: V)
     var dist = Array(repeating: Int.max, count: V) // The output array.  dist[i] will hold the shortest
     // distance from src to i
     
@@ -68,21 +72,21 @@ func dijkstra2D(_ graph: [[Int]], _ src: Int)
         
         // Update dist value of the adjacent vertices of the picked vertex.
         for v in 0..<V {
-            
             // Update the distance values of adjacent vertices of picked vertex.
             // Only if 1. it is not in sptSet;
             // 2. there is an edge from u to v
             // 3. total weight of path from src to v through u is smaller than current value of dist[v]
             if sptSet[v] == false && graph[u][v] > 0 && dist[u] + graph[u][v] < dist[v] {
+                parent[v]  = u
                 dist[v] = dist[u] + graph[u][v]
             }
         }
     }
-//    printSolution(dist, V)
+//    printSolution(dist, V, parent, src)
 }
 
 func allPairDijkstra(_ graph: [[Int]]) {
     for k in 0..<graph.count {
-        dijkstra2D(graph, k)
+        dijkstra(graph, k)
     }
 }
