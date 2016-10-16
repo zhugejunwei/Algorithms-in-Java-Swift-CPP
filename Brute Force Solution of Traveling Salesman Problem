@@ -1,0 +1,73 @@
+void bruteForceSalesman(int[][] map)
+{
+	bool more = false;
+	int n = map.size(), temp = 0, min = Integer.MAX_VALUE;
+	int[] p = new int[n]; int[] p_min = new int[n];
+	index i,j,k;
+	for (;;) {
+		// compute all of the permutations of n nodes.
+		okNext(n, p, more);
+		paths = paths + 1;
+		j = n - 1;
+		// calculate path length
+		for (k = 0; k < n; k++) {
+			temp = temp + map[p[j] + p[k]*n];
+			j = k;
+		}
+		// store the path with minimum length
+		if (temp < min) {
+			min = temp;
+			for (i = 0; i < n; i++) {
+				p_min[i] = p[i]
+			}
+		}
+		if(!more) 
+			break;
+	}
+	
+	cout << "Route: " << p_min[0] to p_min[n-1] << endl;
+	cout << "Number of paths: " << paths << endl;
+	cout << "Length: " << min << endl;
+}
+
+// Steinhaus–Johnson–Trotter algorithm is used
+void okNext(int n, int p[], bool &more)
+{
+	index i;
+	int m2,n2,nfact,rank,q,s,t;
+	
+	if (!more)
+	{
+		for (i = 0; i < n; i++) 
+		{
+			p[i] = i;
+		}
+		more = true;
+		rank = 1;
+		
+		nfact = 1;
+		for (i = 1; i <= n; i++) {
+			nfact = nfact * i;
+		}
+	} else {
+		n2 = n;
+		m2 = rank;
+		s = n;
+		for (;;)
+		{
+			q = m2 % n2;
+			t = m2 % (2 * n2);
+			if (q != 0) break;
+			if (t == 0) s = s - 1;
+			m2 = m2 / n2;
+			n2 = n2 - 1;
+		}
+		if (q == t) s = s - q;
+		else s = s + q - n2;
+		exchange p[s] with p[s-1];
+		
+		rank = rank + 1;
+		if (rank == nfact) more = false;
+	}
+}
+

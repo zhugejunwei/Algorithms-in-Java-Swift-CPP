@@ -30,5 +30,6 @@ public class Main {
                 shu[col] = false; pie[j] = false; na[k] = false;
             }
         }
+        shu[col] = false; pie[j] = false; na[k] = false;
     }
 }
