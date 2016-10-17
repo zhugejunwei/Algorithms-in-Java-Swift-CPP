@@ -6,7 +6,7 @@ void bruteForceSalesman(int[][] map)
 	index i,j,k;
 	for (;;) {
 		// compute all of the permutations of n nodes.
-		okNext(n, p, more);
+		permNext(n, p, more);
 		paths = paths + 1;
 		j = n - 1;
 		// calculate path length
@@ -31,7 +31,7 @@ void bruteForceSalesman(int[][] map)
 }
 
 // Steinhaus–Johnson–Trotter algorithm is used
-void okNext(int n, int p[], bool &more)
+void permNext(int n, int p[], bool &more)
 {
 	index i;
 	int m2,n2,nfact,rank,q,s,t;
