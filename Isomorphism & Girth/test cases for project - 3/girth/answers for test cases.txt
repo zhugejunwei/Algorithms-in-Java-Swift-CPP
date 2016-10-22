@@ -1,0 +1,2 @@
+The girth of graph-1 is 4.
+The girth of graph-2 is ? (find out using your own algorithm).

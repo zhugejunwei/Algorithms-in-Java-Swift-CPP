@@ -1,0 +1,3 @@
+The two graphs in case-1 are isomorphic.
+The two graphs in case-2 are not isomorphic.
+The two graphs in case-3 are ? (find out using your own algorithm).
