@@ -1,7 +1,6 @@
 // iteration
 public class Solution {
     public ListNode reverseList(ListNode head) {
-        // 31.9
         ListNode newHead = null;
         while (head != null) {
             ListNode next = head.next;
