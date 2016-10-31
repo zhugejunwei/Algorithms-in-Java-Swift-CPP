@@ -61,6 +61,15 @@ func isomorphism(_ graph1: [[Int]], _ graph2: [[Int]]) {
     let isomorphic = DFS(n, n - 1, graph1, graph2, &used)
     if isomorphic == true {
         print("Graphs are isomorphic")
+        print("The orderings of graph1 vertices: ")
+        for i in 0..<n {
+            print(i, terminator: "\t")
+        }
+        print("\n")
+        print("The orderings of graph1 vertices: ")
+        for i in 0..<n {
+            print(perm[i], terminator: "\t")
+        }
     } else {
         print("Graphs are NOT isomorphic")
     }
