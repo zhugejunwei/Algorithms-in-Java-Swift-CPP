@@ -6,9 +6,11 @@ public class Solution {
         int len1 = str.length(), len2 = pattern.length();
         while (s < len1) {
             if (p < len2 && (pattern.charAt(p) == str.charAt(s) || pattern.charAt(p) == '?')) {
+                // p[j] == s[i] || p[j] == '?'
                 s++;
                 p++;
             } else if (p < len2 && pattern.charAt(p) == '*') {
+                // if p[j] == '*'
                 star = p;
                 match = s;
                 p++;
