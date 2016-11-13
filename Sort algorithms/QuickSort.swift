@@ -9,7 +9,7 @@ import Darwin
  */
 
 // 1st version
-func partition(inout arr: [Int], _ l: Int, _ r: Int) -> Int
+func partition(arr:inout [Int], _ l: Int, _ r: Int) -> Int
 {
     var i, j, pivot: Int
     pivot = arr[r]
@@ -25,7 +25,7 @@ func partition(inout arr: [Int], _ l: Int, _ r: Int) -> Int
     return i + 1
 }
 
-func quickSort(inout arr: [Int], _ l: Int, _ r: Int)
+func quickSort(arr:inout [Int], _ l: Int, _ r: Int)
 {
     if l < r {
         let key = partition(&arr, l, r)
@@ -40,14 +40,14 @@ quickSort(&a, l, r)
 
 
 // 2nd version
-func adjust(inout arr: [Int], _ l: Int, _ r: Int) -> Int
+func adjust(arr: inout [Int], _ l: Int, _ r: Int) -> Int
 {
     var i = l, j = r, p = arr[l]
     while i < j {
         // j: bigger than p
         while i < j && arr[j] >= p {
             j -= 1
-        }
+        } // find the value small than P
         if i < j {
             arr[i] = arr[j]
             i += 1
@@ -65,7 +65,7 @@ func adjust(inout arr: [Int], _ l: Int, _ r: Int) -> Int
     return i
 }
 
-func quickSort2(inout arr: [Int], _ l: Int, _ r: Int)
+func quickSort2(arr:inout [Int], _ l: Int, _ r: Int)
 {
     if l < r {
         let key = adjust(&arr, l, r)

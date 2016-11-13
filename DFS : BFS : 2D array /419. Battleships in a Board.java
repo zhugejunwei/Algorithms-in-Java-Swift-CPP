@@ -30,7 +30,6 @@ public class Solution {
 
 // BFS
 public class Solution {
-    // BFS
     int[][] dir = {{1,0}, {0,1}, {-1,0}, {0,-1}};
     public int countBattleships(char[][] board) {
         if (board.length == 0 || board == null) return 0;
