@@ -37,3 +37,25 @@ public class Solution {
         return false;
     }
 }
+
+// same with the first solution
+public class Solution {
+    // If the next step cannot win, start person win;
+    public boolean canWin(String s) {
+        return canWin(s.toCharArray(), s.length());
+    }
+    
+    private boolean canWin(char[] s, int len) {
+        for (int i = 0; i < len - 1; i++) {
+            if (s[i] == '+' && s[i+1] == '+') {
+                s[i] = '-';
+                s[i+1] = '-';
+                boolean win = !canWin(s, len);
+                s[i] = '+';
+                s[i+1] = '+';
+                if (win) return true;
+            }
+        }
+        return false;
+    }
+}
