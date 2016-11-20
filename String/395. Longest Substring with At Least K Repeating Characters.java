@@ -23,7 +23,7 @@ public class Solution {
     }
 }
 
-///  below faster
+// faster
 
 public class Solution {
     public int longestSubstring(String s, int k) {
