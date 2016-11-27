@@ -27,7 +27,6 @@ public class Solution {
             return null;
         }
     }
-// divide and conquer ----- merge sort -------
     
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if (l1 == null) return l2;

@@ -28,3 +28,26 @@ public class Solution
         }
     }
 }
+
+// simple backtracking
+public class Solution {
+    String[] letters = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList();
+        if (digits.length() == 0) return res;
+        dfs(digits, res, "", 0);
+        return res;
+    }
+    
+    private void dfs(String s, List<String> res, String tmp, int i) {
+        if (i > s.length()) return;
+        if (i == s.length()) {
+            res.add(new String(tmp));
+            return;
+        }
+        int num = Character.getNumericValue(s.charAt(i));
+        for (int j = 0; j < letters[num].length(); j++) {
+            dfs(s, res, tmp + letters[num].charAt(j), i + 1);
+        }
+    }
+}
