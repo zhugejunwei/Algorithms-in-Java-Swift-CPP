@@ -54,7 +54,7 @@ public class Main
                 i++;
                 j++;
                 if (i == m) {
-                    int l = i, r = i;
+                    int l = j - 1, r = j;
                     while (l >= 0 && text.charAt(l) != ' ') l--;
                     while (r < n && text.charAt(r) != ' ') r++;
                     return text.substring(l + 1, r);
