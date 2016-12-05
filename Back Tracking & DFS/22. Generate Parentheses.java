@@ -20,3 +20,25 @@ public class Solution {
         }
     }
 }
+
+
+public class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList();
+        dfs(n, res, 0, 0, "");
+        return res;
+    }
+    
+    private void dfs(int n, List<String> res, int l, int r, String s) {
+        if (s.length() == n * 2) {
+            res.add(s);
+            return;
+        }
+        if (l < n) {
+            dfs(n, res, l + 1, r, s + "(");
+        }
+        if (r < l) {
+            dfs(n, res, l, r + 1, s + ")");
+        }
+    }
+}
