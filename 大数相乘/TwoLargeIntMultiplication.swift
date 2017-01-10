@@ -1,6 +1,108 @@
 import Darwin
 
-// 1. Ala Carte Multiplication algorithm
+// 1. Rectangle Multiplication algorithm (Lettuce Multiplication)
+func rectangleMultiplication(_ x: [Int], _ y: [Int]) -> [Int]
+{
+    var arrX = x, arrY = y
+    // Edge cases: if x < 0 or y < 0, or x == 0 or y == 0
+    var tag = 1 // a tag if the result is positive or negative
+    if arrX[0] < 0 {
+        arrX[0] = -arrX[0]
+        tag = -tag
+    } else if arrX[0] == 0 {
+        return [0]
+    }
+    if arrY[0] < 0 {
+        arrY[0] = -arrY[0]
+        tag = -tag
+    } else if arrY[0] == 0 {
+        return [0]
+    }
+    // the two dimensional rectangle array
+    var arr = Array(repeating: Array(repeating: 0, count: arrX.count), count: arrY.count)
+    
+    var j = arrY.startIndex
+    // calculate the rectangle (two dimensional array)
+    while j < arrY.endIndex {
+        var i = arrX.startIndex
+        while i < arrX.endIndex {
+            arr[j][i] = arrY[j] * arrX[i]
+            i += 1
+        }
+        j += 1
+    }
+    
+    var res = [Int]()
+    var carry = 0
+    var i = arrY.count - 1
+    // add up the values in the rectangle, from bottom to top
+    while i >= 0 {
+        var m = i
+        var n = arrX.count - 1
+        var down = 1 // a mark that the value need to be added is the down side in a cell
+        var tmp = 0
+        while m <= arrY.count - 1 && n >= 0 {
+            if down == 1 {
+                tmp += arr[m][n] % 10
+                m += 1
+                down *= -1
+            } else {
+                tmp += arr[m][n] / 10
+                n -= 1
+                down *= -1
+            }
+        }
+        tmp += carry
+        carry = tmp / 10
+        tmp = tmp % 10
+        res.append(tmp)
+        i -= 1
+    }
+    
+    // add up the values in the rectangle, from right to left
+    j = arrX.count - 1
+    while j >= 0 {
+        var m = 0;
+        var n = j
+        var tmp = 0
+        var up = 1 // a mark that the value need to be added is the up side in a cell
+        while m <= arrY.count - 1 && n >= 0 {
+            if up == 1 {
+                tmp += arr[m][n] / 10
+                n -= 1
+                up *= -1
+            } else {
+                tmp += arr[m][n] % 10
+                m += 1
+                up *= -1
+            }
+        }
+        tmp += carry
+        carry = tmp / 10
+        tmp = tmp % 10
+        // calculate the last element of the result
+        if j == 0 && tmp == 0 && carry == 0 {
+            break
+        } else if j == 0 && tmp == 0 && carry != 0 {
+            // there is a carry left
+            res.append(tmp)
+            res.append(carry)
+        } else {
+            res.append(tmp)
+        }
+        j -= 1
+    }
+    // reverse the res[]
+    for k in 0..<res.count/2 {
+        swap(&res[k], &res[res.count-k-1])
+    }
+    res[0] = tag * res[0]
+    return res
+}
+
+
+
+// 2. Ala Carte Multiplication algorithm
 
 // function of two arrays' addition
 func addition(_ x: [Int], _ y: [Int]) -> [Int] {
@@ -139,105 +241,6 @@ func twoLargeIntMultiplication(_ x: [Int], _ y: [Int]) -> [Int]
 }
 
 
-// 2. Rectangle Multiplication algorithm
-func rectangleMultiplication(_ x: [Int], _ y: [Int]) -> [Int]
-{
-    var arrX = x, arrY = y
-    // Edge cases: if x < 0 or y < 0, or x == 0 or y == 0
-    var tag = 1 // a tag if the result is positive or negative
-    if arrX[0] < 0 {
-        arrX[0] = -arrX[0]
-        tag = -tag
-    } else if arrX[0] == 0 {
-        return [0]
-    }
-    if arrY[0] < 0 {
-        arrY[0] = -arrY[0]
-        tag = -tag
-    } else if arrY[0] == 0 {
-        return [0]
-    }
-    // the two dimensional rectangle array
-    var arr = Array(repeating: Array(repeating: 0, count: arrX.count), count: arrY.count)
-    
-    var j = arrY.startIndex
-    // calculate the rectangle (two dimensional array)
-    while j < arrY.endIndex {
-        var i = arrX.startIndex
-        while i < arrX.endIndex {
-            arr[j][i] = arrY[j] * arrX[i]
-            i += 1
-        }
-        j += 1
-    }
-    
-    var res = [Int]()
-    var carry = 0
-    var i = arrY.count - 1
-    // add up the values in the rectangle, from bottom to top
-    while i >= 0 {
-        var m = i
-        var n = arrX.count - 1
-        var down = 1 // a mark that the value need to be added is the down side in a cell
-        var tmp = 0
-        while m <= arrY.count - 1 && n >= 0 {
-            if down == 1 {
-                tmp += arr[m][n] % 10
-                m += 1
-                down *= -1
-            } else {
-                tmp += arr[m][n] / 10
-                n -= 1
-                down *= -1
-            }
-        }
-        tmp += carry
-        carry = tmp / 10
-        tmp = tmp % 10
-        res.append(tmp)
-        i -= 1
-    }
-    
-    // add up the values in the rectangle, from right to left
-    j = arrX.count - 1
-    while j >= 0 {
-        var m = 0;
-        var n = j
-        var tmp = 0
-        var up = 1 // a mark that the value need to be added is the up side in a cell
-        while m <= arrY.count - 1 && n >= 0 {
-            if up == 1 {
-                tmp += arr[m][n] / 10
-                n -= 1
-                up *= -1
-            } else {
-                tmp += arr[m][n] % 10
-                m += 1
-                up *= -1
-            }
-        }
-        tmp += carry
-        carry = tmp / 10
-        tmp = tmp % 10
-        // calculate the last element of the result
-        if j == 0 && tmp == 0 && carry == 0 {
-            break
-        } else if j == 0 && tmp == 0 && carry != 0 {
-            // there is a carry left
-            res.append(tmp)
-            res.append(carry)
-        } else {
-            res.append(tmp)
-        }
-        j -= 1
-    }
-    // reverse the res[]
-    for k in 0..<res.count/2 {
-        swap(&res[k], &res[res.count-k-1])
-    }
-    res[0] = tag * res[0]
-    return res
-}
 
 
 

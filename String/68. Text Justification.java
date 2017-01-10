@@ -11,12 +11,12 @@ public class Solution {
             }
             StringBuilder curStr = new StringBuilder(words[i]);
             int space = 1, extra = 0;
-            // not 1 char, not last line
+            // not 1 word, not last line
             if (k != i + 1 && k != words.length) {
-                space = (L - len) / (k - i - 1) + 1; // 1 is for another space
+                space = (L - len) / (k - i - 1) + 1; // +1 is for the original one space between words
                 extra = (L - len) % (k - i - 1);
             }
-            // not 1 char, including last line, initialize space == 1 is to deal with last line case.
+            // not 1 word, including last line, initialize space == 1 is to deal with last line case.
             for (int j = i + 1; j < k; j++) { // j: index of word in the current line
                 for (int s = space; s > 0; s--) curStr.append(" "); // add the "even" space
                 if (extra-- > 0) curStr.append(" ");

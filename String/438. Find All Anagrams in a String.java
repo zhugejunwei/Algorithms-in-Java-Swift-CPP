@@ -8,7 +8,7 @@ public class Solution {
         while (end < s.length()) {
             if (map[s.charAt(end++)]-- >= 1) count--;
             if (count == 0) list.add(start);
-            // slide window
+            // slide window, one by one, move one char at a time
             if (end - start == p.length() && map[s.charAt(start++)]++ >= 0) count++;
         }
         return list;

@@ -31,7 +31,7 @@ public class Solution {
     }
     
     private int helper(String s, int beg, int end, int k) {
-        if (end - beg < k) return 0;
+        if (end - beg < k) return 0; // dont forget the terminate condition
         int[] count = new int[128];
         for (int i = beg; i < end; i++) ++count[s.charAt(i)];
         for (int i = beg; i < end; i++) {

@@ -16,3 +16,21 @@ public class Solution {
         return Math.abs(a - target) < Math.abs(b - target) ? a : b;
     }
 }
+
+
+// 
+
+public class Solution {
+    public int closestValue(TreeNode root, double target) {
+        int pre = root.val;
+        int kid = 0;
+        if (target < root.val) {
+            if (root.left == null) return pre;
+            else kid = closestValue(root.left, target);
+        } else {
+            if (root.right == null) return pre;
+            else kid = closestValue(root.right, target);
+        }
+        return Math.abs(target - pre) > Math.abs(target - kid) ? kid : pre;
+    }
+}

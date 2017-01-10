@@ -1,22 +1,54 @@
+// top -> down
+
 public class Solution {
     public int maxCoins(int[] nums) {
-        if (nums.length == 0) return 0;
-        int[] num = new int[nums.length+2];
-        int n = 1;
-        for (int i : nums) if (i > 0) num[n++] = i;
-        num[0] = num[n++] = 1;
-        
-        return DC(new int[n][n], num, 0, n-1);
+        int n = nums.length;
+        if (n == 0) return 0;
+        int[] bal = new int[n + 2];
+        for (int i = 1; i <= n; i++) {
+            bal[i] = nums[i - 1];
+        }
+        bal[0] = bal[n + 1] = 1;
+        return helper(new int[n + 1][n + 1], bal, 1, n);
     }
     
-    private int DC(int[][] memo, int[] num, int l, int r) {
-        if (l + 1 == r) return 0;
-        if (memo[l][r] > 0) return memo[l][r];
-        int coin = 0;
-        for (int i = l+1; i < r; i++) {
-            coin = Math.max(coin, num[l]*num[i]*num[r] + DC(memo, num, l, i) + DC(memo, num, i, r));
+    private int helper(int[][] cache, int[] bal, int l, int r) {
+        if (l > r) return 0;
+        if (cache[l][r] != 0) return cache[l][r];
+        int res = 0;
+        for (int i = l; i <= r; i++) {
+            int left = helper(cache, bal, l, i - 1);
+            int right = helper(cache, bal, i + 1, r);
+            int burst = bal[l - 1] * bal[i] * bal[r + 1];  // last burst !!
+            res = Math.max(res, left + burst + right);
         }
-        memo[l][r] = coin;
-        return coin;
+        cache[l][r] = res;
+        return res;
+    }
+}
+// dp
+// bot -> up
+
+public class Solution {
+    public int maxCoins(int[] nums) {
+        int n = nums.length;
+        int[][] dp = new int[n + 2][n + 2];
+        int[] bal = new int[n + 2];
+        for (int i = 1; i <= n; i++) {
+            bal[i] = nums[i - 1];
+        }
+        bal[0] = bal[n + 1] = 1;
+        for (int len = 1; len <= n; len++) {
+            for (int l = 1; l + len - 1 <= n; l++) {
+                int r = l + len - 1;
+                for (int k = l; k <= r; k++) {
+                    int left = 0, right = 0;
+                    if (k > l) left = dp[l][k - 1];
+                    if (k < r) right = dp[k + 1][r];
+                    dp[l][r] = Math.max(dp[l][r], bal[l - 1] * bal[k] * bal[r + 1] + left + right);
+                }
+            }
+        }
+        return dp[1][n];
     }
 }

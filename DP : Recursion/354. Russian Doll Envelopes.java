@@ -24,3 +24,28 @@ public class Solution {
         return max;
     }
 }
+
+//
+public class Solution {
+    public int maxEnvelopes(int[][] envelopes) {
+        int n = envelopes.length;
+        if (n == 0) return 0;
+        Arrays.sort(envelopes, (a, b) -> (a[0] == b[0] ? b[1] - a[1] : a[0] - b[0]));
+        int[] dp = new int[n];
+        int size = 0;
+        for (int[] en : envelopes) {
+            int l = 0, r = size;
+            while (l < r) {
+                int m = (l & r) + ((l ^ r) >>> 1);
+                if (en[1] > dp[m]) {
+                    l = m + 1;
+                } else {
+                    r = m;
+                }
+            }
+            dp[l] = en[1];
+            if (l == size) size++;
+        }
+        return size;
+    }
+}

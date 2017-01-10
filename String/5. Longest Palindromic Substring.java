@@ -6,7 +6,7 @@ public class Solution {
         for (int i = 0; i < len;) {
             if ((len - i) * 2 <= maxLen) break;
             int j = i, k = i;
-            // skip duplicates
+            // skip same characters
             while (k + 1 < len && s.charAt(k) == s.charAt(k + 1)) ++k;
             i = k + 1;
             // expand

@@ -16,6 +16,9 @@ public List<Integer> preorderTraversal(TreeNode root) {
     }
     return list;
 }
+// recursion:
+
+
 
 // ===================== In ==================//
 
@@ -34,6 +37,21 @@ public List<Integer> inorderTraversal(TreeNode root) {
         }
     }
     return list;
+}
+// recursion
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList();
+        helper(root, list);
+        return list;
+    }
+    
+    private void helper(TreeNode root, List<Integer> list) {
+        if (root == null) return;
+        helper(root.left, list);
+        list.add(root.val);
+        helper(root.right, list);
+    }
 }
 
 // ===================== post ==================//
@@ -54,3 +72,31 @@ public List<Integer> postorderTraversal(TreeNode root) {
     }
     return list;
 }
+// recursion:
+
+
+
+// get successor of a given node in bst
+public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+    if (root == null) return null;
+    
+    if (root.val <= p.val) {
+        return inorderSuccessor(root.right, p);
+    } else {
+        TreeNode left = inorderSuccessor(root.left, p);
+        return left != null ? left : root;
+    }
+}
+
+// get predecessor of a given node in bst
+public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+    if (root == null) return null;
+    
+    if (root.val >= p.val) {
+        return inorderSuccessor(root.left, p);
+    } else {
+        TreeNode right = inorderSuccessor(root.right, p);
+        return right != null ? right : root;
+    }
+}
+

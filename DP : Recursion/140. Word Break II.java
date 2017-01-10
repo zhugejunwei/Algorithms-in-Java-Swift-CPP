@@ -1,9 +1,10 @@
+// divide and conqur 16ms
 public class Solution {
     public List<String> wordBreak(String s, Set<String> wordDict) {
-        return backtrack(s, wordDict, new HashMap<String, List<String>>());
+        return helper(s, wordDict, new HashMap<String, List<String>>());
     }
     
-    private List<String> backtrack(String s, Set<String> wordDict, HashMap<String, List<String>> map) {
+    private List<String> helper(String s, Set<String> wordDict, HashMap<String, List<String>> map) {
         if (map.containsKey(s)) {
             return map.get(s);
         }
@@ -28,43 +29,32 @@ public class Solution {
 }
 
 
-////  pruned backtracking
-
+// pruned dp/divide and conquer 8ms
 public class Solution {
+    Map<Integer, List<String>> map = new HashMap();
     public List<String> wordBreak(String s, Set<String> wordDict) {
-        List<Integer>[] starts = new List[s.length() + 1]; // all valid start positions
-        starts[0] = null;
-        int maxWordLen = 0;
-        for (String word : wordDict) {
-            maxWordLen = Math.max(word.length(), maxWordLen);
-        }
-        for (int i = 1; i <= s.length(); i++) {
-            for (int j = i - 1; j >= i-maxWordLen && j >= 0; j--) {
-                if (starts[j] == null) continue;
-                if (wordDict.contains(s.substring(j, i))) {
-                    if (starts[i] == null) {
-                        starts[i] = new ArrayList<>();
-                    }
-                    starts[i].add(j);
-                }
-            }
-        }
-        List<String> res = new ArrayList<>();
-        if (starts[s.length()] == null) {
-            return res;
-        }
-        dfs(s, res, "", starts, s.length());
-        return res;
+        int maxLength = 0;
+        for (String word : wordDict) maxLength = Math.max(word.length(), maxLength);
+        return helper(s, wordDict, maxLength, 0);
     }
     
-    private void dfs(String s, List<String> res, String path, List<Integer>[] starts, int end) {
-        if (end == 0) {
-            res.add(path.substring(1));
-            return;
+    private List<String> helper(String s, Set<String> dict, int max, int start) {
+        List<String> res = new ArrayList();
+        if (start == s.length()) {
+            res.add("");
+            return res;
         }
-        for (Integer start : starts[end]) {
-            String word = s.substring(start, end);
-            dfs(s, res, " " + word + path, starts, start);
+        for (int i = start + 1; i <= start + max && i <= s.length(); i++) {
+            String tmp = s.substring(start, i);
+            if(dict.contains(tmp)) {
+                List<String> list;
+                if (map.containsKey(i)) list = map.get(i);
+                else list = helper(s, dict, max, i);
+                for (String ss : list) res.add(tmp + (ss.isEmpty() ? "" : " ") + ss);
+            }
         }
+        map.put(start, res);
+        return res;
     }
 }
+

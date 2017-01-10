@@ -9,3 +9,15 @@ public class Solution {
         return res;
     }
 }
+
+// use sum
+
+public class Solution {
+    public int missingNumber(int[] nums) {
+        int sum = (1 + nums.length) * nums.length / 2;
+        for (int n : nums) {
+            sum -= n;
+        }
+        return sum;
+    }
+}

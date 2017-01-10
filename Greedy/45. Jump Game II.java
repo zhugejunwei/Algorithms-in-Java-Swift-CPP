@@ -3,7 +3,7 @@ public class Solution {
         int curEnd = 0, curFarthest = 0, steps = 0;
         for (int i = 0; i < nums.length - 1; i++) {
             curFarthest = Math.max(curFarthest, nums[i] + i);
-            if (i == curEnd) {
+            if (i >= curEnd) {
                 steps++;
                 curEnd = curFarthest;
             }

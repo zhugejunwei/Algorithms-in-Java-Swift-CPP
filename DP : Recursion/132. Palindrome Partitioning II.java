@@ -16,7 +16,7 @@ public class Solution {
         for (int i = 0; i < n; i++) {
             int min = i;
             for (int j = i; j >= 0; j--) { // this is faster
-                if (c[j] == c[i] && (j + 1 > i - 1 || pl[j + 1][i - 1])) { // (j + 1 > i - 1 || pl[j + 1][i - 1])
+                if (c[j] == c[i] && (j + 1 > i - 1 || pl[j + 1][i - 1])) {
                     pl[j][i] = true;
                     min = j == 0 ? 0 : Math.min(min, cut[j - 1] + 1);
                 }

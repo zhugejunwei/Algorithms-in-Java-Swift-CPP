@@ -57,25 +57,25 @@ public class Solution {
         return res;
     }
     
-    // if ))), these three ))) are the same.
-    // ))(), first two )) are the same.
-    // so remove the consecutive ))'s first )
     private void DFS(String s, List<String> res, int last_i, int last_j, char[] pare) {
         for (int count = 0, i = last_i; i < s.length(); i++) {
             if (s.charAt(i) == pare[0]) count++;
             if (s.charAt(i) == pare[1]) count--;
             if (count >= 0) continue;
             for (int j = last_j; j <= i; j++) {
+                // if ))), these three ))) are the same.
+                // ))(), first two )) are the same.
+                // so remove the consecutive ))'s first )
                 if (s.charAt(j) == pare[1] && (j == last_j || s.charAt(j - 1) != pare[1])) {
                     DFS(s.substring(0, j) + s.substring(j + 1), res, i, j, pare);
                 }
             }
+            // 这个 “return” 把所有不符合的都挡在了上面，只有符合条件的，也就是上面的符合上面的 “continue” 的
+            // 这样做有一个好处，每个string只会经历一次循环，如何符合了就放到res中。终止条件就是这个for循环
             return;
         }
         String reversed = new StringBuilder(s).reverse().toString();
         if (pare[0] == '(') {
-            // StringBuilder sb = new StringBuilder(s);
-            // s = sb.reverse().toString();
             DFS(reversed, res, 0, 0, new char[]{')', '('});
         } else {
             res.add(reversed);

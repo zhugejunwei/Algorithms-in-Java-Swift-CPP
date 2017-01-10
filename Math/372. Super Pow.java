@@ -1,4 +1,6 @@
 public class Solution {
+    // ab % k = (a%k * b%k)%k
+    // f(a, 123) = f(a, 120) * f(a, 3) % k = f(f(a, 12), 10) * f(a, 3) % k
     int base = 1337;
     public int superPow(int a, int[] b) {
         return superPow(a, b, b.length - 1);

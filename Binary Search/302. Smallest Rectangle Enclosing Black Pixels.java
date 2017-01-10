@@ -1,3 +1,4 @@
+// binary search
 public class Solution {
     public int minArea(char[][] image, int x, int y) {
         int m = image.length, n = image[0].length;
@@ -25,5 +26,34 @@ public class Solution {
             }
         }
         return lower;
+    }
+}
+
+// dfs
+public class Solution {
+    int[][] dirs = {{0, 1},{0, -1},{1, 0},{-1, 0}};
+    int left, right, up, down;
+    public int minArea(char[][] image, int x, int y) {
+        if (image == null || image.length == 0) return 0;
+        int m = image.length, n = image[0].length;
+        boolean[][] vis = new boolean[m][n];
+        vis[x][y] = true;
+        left = y; right = y; down = x; up = x;
+        findEdge(image, x, y, vis, m, n);
+        return (right - left + 1) * (down - up + 1);
+    }
+    
+    private void findEdge(char[][] image, int x, int y, boolean[][] vis, int m, int n) {
+        if (y < left) left = y;
+        if (y > right) right = y;
+        if (x < up) up = x;
+        if (x > down) down = x;
+        
+        for (int[] d : dirs) {
+            int x1 = x + d[0], y1 = y + d[1];
+            if (x1 < 0 || y1 < 0 || x1 >= m || y1 >= n || vis[x1][y1] || image[x1][y1] == '0') continue;
+            vis[x1][y1] = true;
+            findEdge(image, x1, y1, vis, m, n);
+        }
     }
 }

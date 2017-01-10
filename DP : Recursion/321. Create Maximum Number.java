@@ -1,36 +1,42 @@
 public class Solution {
     public int[] maxNumber(int[] nums1, int[] nums2, int k) {
-        int n1 = nums1.length, n2 = nums2.length;
         int[] res = new int[k];
-        for (int i = Math.max(0, k - n2); i <= n1 && i <= k; i++) {
-            int[] candidate = merge(maxArray(nums1, i), maxArray(nums2, k - i), k);
+        int n1 = nums1.length, n2 = nums2.length;
+        for (int len1 = Math.max(0, k - n2); len1 <= n1 && len1 <= k; len1++) {
+            int[] candidate = merge(maxSubarray(nums1, len1), maxSubarray(nums2, k - len1), k);
             if (greater(candidate, 0, res, 0)) res = candidate;
         }
         return res;
     }
-    private int[] maxArray(int[] nums, int k) {
-        int n = nums.length;
+    
+    private int[] maxSubarray(int[] arr, int k) {
         int[] res = new int[k];
-        for (int i = 0, j = 0; i < n; i++) {
-            while (n - i > k - j && j > 0 && nums[i] > res[j - 1]) j--;
-            if (j < k) res[j++] = nums[i];
+        int n = arr.length;
+        int last = -1;
+        for (int i = 0; i < k; i++) {
+            for (int j = last + 1; j + (k - i - 1) < n; j++) {
+                if (res[i] < arr[j]) {
+                    res[i] = arr[j];
+                    last = j;
+                }
+            }
         }
         return res;
     }
-    private int[] merge(int[] nums1, int[] nums2, int k) {
+    
+    private int[] merge(int[] arr1, int[] arr2, int k) {
         int[] res = new int[k];
-        int n1 = nums1.length, n2 = nums2.length;
-        for (int i = 0, j = 0, r = 0; r < k; ++r) {
-            res[r] = greater(nums1, i, nums2, j) ? nums1[i++] : nums2[j++];
+        for (int i = 0, j = 0, r = 0; r < k; r++) {
+            res[r] = greater(arr1, i, arr2, j) ? arr1[i++] : arr2[j++];
         }
         return res;
     }
-    private boolean greater(int[] nums1, int i, int[] nums2, int j) {
-        int n1 = nums1.length, n2 = nums2.length;
-        while (i < n1 && j < n2 && nums1[i] == nums2[j]) {
+    
+    private boolean greater(int[] arr1, int i, int[] arr2, int j) {
+        while (i < arr1.length && j < arr2.length && arr1[i] == arr2[j]) {
             i++;
             j++;
         }
-        return j == n2 || (i < n1 && nums1[i] > nums2[j]);
+        return j == arr2.length || (i < arr1.length && arr1[i] > arr2[j]);
     }
 }

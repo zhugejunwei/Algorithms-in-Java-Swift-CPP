@@ -12,21 +12,36 @@ public class Solution {
     }
 }
 
+// sell 在 buy 之前
+public class Solution {
+    public int maxProfit(int[] prices) {
+        if (prices == null || prices.length <= 1) return 0;
+        int n = prices.length;
+        
+        int sell1 = 0, buy1 = -prices[0], sell2 = 0, buy2 = Integer.MIN_VALUE;
+        for (int p : prices) {
+            sell1 = Math.max(sell1, buy1 + p);
+            buy1 = Math.max(buy1, -p);
+            sell2 = Math.max(sell2, buy2 + p);
+            buy2 = Math.max(buy2, sell1 - p);
+        }
+        return sell2;
+    }
+}
 
 // ======================== typical DP solution ========================= //
 
 public class Solution {
     public int maxProfit(int[] prices) {
         if (prices.length < 2) return 0;
-        int n = 2;
-        int max = 0;
-        int[][] f = new int[n + 1][prices.length];
-        for (int k = 1; k <= n; k++) {
-            int tmp = f[k-1][0] - prices[0];
-            for (int i = 1; i < prices.length; i++) {
-                f[k][i] = Math.max(f[k][i-1], prices[i] + tmp);
-                tmp = Math.max(tmp, f[k - 1][i] - prices[i]);
-                max = Math.max(max, f[k][i]);
+        int max = 0, k = 2;
+        int[][] f = new int[k + 1][prices.length];
+        for (int i = 1; i <= k; i++) {
+            int preMax = f[i-1][0] - prices[0]; // transaction_1, buy the first stock
+            for (int j = 1; j < prices.length; j++) {
+                f[i][j] = Math.max(f[i][j-1], preMax + prices[j]); // whether to sell the stock at this time
+                preMax = Math.max(preMax, f[i - 1][j] - prices[j]); // whether to buy this stock or not
+                max = Math.max(max, f[i][j]);
             }
         }
         return max;

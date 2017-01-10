@@ -27,6 +27,7 @@ public class Solution {
             }
             int cur = heightMap.lastKey(); // curHeight
             if (pre != cur) {
+                // use cur instead of height[1] is because height[1] coule be negative
                 res.add(new int[]{h[0], cur});
                 pre = cur;
             }
