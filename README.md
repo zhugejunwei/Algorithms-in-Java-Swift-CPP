@@ -1,5 +1,6 @@
 #Basic Algorithms
-This is a self-traning project, implementing some basic algorithms with Java, Swift and C++.
+1. LeetCode answers, in Java, Swift.
+2. Basic algorihtms in Java, Swift and C++, such as graph, encoding and decoding, backtracking, topology, etc.
 
 ## Language
 * Java
