@@ -1,19 +1,26 @@
 public class Solution {
-    public boolean sequenceReconstruction(int[] org, int[][] seqs) {
-        if (seqs.length == 0 || seqs == null) return org.length == 0 || org == null;
+    public boolean sequenceReconstruction(int[] org, List<List<Integer>> seqs) {
+        if (seqs == null || seqs.size() == 0) return org == null || org.length == 0;
         int n = org.length;
-        int[] index = new int[n + 1];
+        int[] idx = new int[n + 1];
         boolean[] pair = new boolean[n];
+        Set<Integer> vis = new HashSet();
+        
         for (int i = 0; i < n; i++) {
-            index[org[i]] = i;
+            idx[org[i]] = i;
         }
-        for (int[] s : seqs) {
-            for (int j = 0; j < s.length; j++) {
-                if (s[j] > n || s[j] < 0) return false;
-                if (j > 0 && index[s[j - 1]] >= index[s[j]]) return false;
-                if (j > 0 && index[s[j - 1]] + 1 == index[s[j]]) pair[index[s[j - 1]]] = true;
+        
+        for (List<Integer> seq : seqs) {
+            for (int i = 0; i < seq.size(); i++) {
+                vis.add(seq.get(i));
+                if (seq.get(i) <= 0 || seq.get(i) > n) return false;
+                if (i > 0 && idx[seq.get(i - 1)] >= idx[seq.get(i)]) return false;
+                if (i > 0 && idx[seq.get(i - 1)] + 1 == idx[seq.get(i)]) pair[idx[seq.get(i - 1)]] = true;
             }
         }
+        
+        if (vis.size() != n) return false;
+        
         for (int i = 0; i < n - 1; i++) {
             if (!pair[i]) return false;
         }
@@ -23,41 +30,49 @@ public class Solution {
 
 // Topological sort
 public class Solution {
-    public boolean sequenceReconstruction(int[] org, int[][] seqs) {
-        if (seqs.length == 0) return org.length == 0;
+    public boolean sequenceReconstruction(int[] org, List<List<Integer>> seqs) {
+        if (org == null || org.length == 0) return seqs == null || seqs.size() == 0;
+        if (seqs == null || seqs.size() == 0) return org == null || org.length == 0;
         int n = org.length;
+        Set<Integer> vis = new HashSet();
         List<List<Integer>> graph = new ArrayList(n + 1);
         int[] inDegree = new int[n + 1];
+        // init
+        for (int i = 0; i <= n; i++) {
+            graph.add(new ArrayList());
+        }
         
-        // initGraph
-        for (int i = 0; i <= n; i++) graph.add(new ArrayList());
-        for (int[] s : seqs) {
-            if (s.length == 1 && (s[0] > n || s[0] <= 0)) return false;
-            else {
-                for (int i = 0; i < s.length - 1; i++) {
-                    if (s[i] <= 0 || s[i] > n || s[i + 1] <= 0 || s[i + 1] > n) return false;
-                    inDegree[s[i + 1]]++;
-                    graph.get(s[i]).add(s[i + 1]);
+        for (List<Integer> seq : seqs) {
+            for (int i = 0; i < seq.size(); i++) {
+                vis.add(seq.get(i));
+                if (i + 1 < seq.size()) {
+                    if (seq.get(i) > n || seq.get(i) <= 0 || seq.get(i + 1) > n || seq.get(i + 1) <= 0) return false;
+                    graph.get(seq.get(i)).add(seq.get(i + 1));
+                    inDegree[seq.get(i + 1)]++;
                 }
             }
         }
         
-        // bfs
+        // start point
+        if (inDegree[org[0]] != 0 || vis.size() != n) return false;
+        
         Queue<Integer> q = new ArrayDeque();
         for (int i = 1; i <= n; i++) {
             if (inDegree[i] == 0) q.offer(i);
-            if (q.size() > 1) return false;
         }
+        
+        // traverse graph
         int idx = 0;
         while (!q.isEmpty()) {
-            if (q.size() > 1) return false;
-            int cur = q.poll();
-            if (idx >= org.length || org[idx++] != cur) return false;
-            for (int to : graph.get(cur)) {
+            if (q.size() != 1) return false;
+            int from = q.poll();
+            if (idx >= n || org[idx++] != from) return false;
+            for (int to : graph.get(from)) { // all "to" nodes
                 inDegree[to]--;
                 if (inDegree[to] == 0) q.offer(to);
             }
         }
-        return idx == org.length;
+        
+        return idx == n;
     }
 }
