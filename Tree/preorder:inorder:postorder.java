@@ -49,13 +49,12 @@ public class Solution {
     private void helper(TreeNode root, List<Integer> list) {
         if (root == null) return;
         helper(root.left, list);
-        list.add(root.val);
+        list.add(root.val); // inorder
         helper(root.right, list);
     }
 }
 
 // ===================== post ==================//
-
 public List<Integer> postorderTraversal(TreeNode root) {
     LinkedList<Integer> list = new LinkedList<>();
     Deque<TreeNode> stack = new ArrayDeque<>();
@@ -72,11 +71,27 @@ public List<Integer> postorderTraversal(TreeNode root) {
     }
     return list;
 }
+//
+
 // recursion:
+public class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList();
+        helper(root, res);
+        return res;
+    }
+    
+    private void helper(TreeNode root, List<Integer> res) {
+        if (root == null) return;
+        helper(root.left, res);
+        helper(root.right, res);
+        res.add(root.val); // postorder
+    }
+}
 
 
-
-// get successor of a given node in bst
+// get successor of a given node in bst, left - root - "right"
+// right side, left most node.
 public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
     if (root == null) return null;
     
@@ -88,7 +103,8 @@ public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
     }
 }
 
-// get predecessor of a given node in bst
+// get predecessor of a given node in bst, "left" - root - right
+// left side, right most node
 public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
     if (root == null) return null;
     
