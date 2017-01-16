@@ -16,7 +16,23 @@ public List<Integer> preorderTraversal(TreeNode root) {
     }
     return list;
 }
-// recursion:
+// //深度优先遍历， c++
+void depthFirstSearch(Tree root){
+    stack<Node *> nodeStack;  //使用C++的STL标准模板库
+    nodeStack.push(root);
+    Node *node;
+    while(!nodeStack.empty()){
+        node = nodeStack.top();
+        printf(format, node->data);  //遍历根结点
+        nodeStack.pop();
+        if(node->rchild){
+            nodeStack.push(node->rchild);  //先将右子树压栈
+        }
+        if(node->lchild){
+            nodeStack.push(node->lchild);  //再将左子树压栈
+        }
+    }
+}
 
 
 
@@ -71,7 +87,61 @@ public List<Integer> postorderTraversal(TreeNode root) {
     }
     return list;
 }
-//
+// 真正的最后遍历根节点 !!
+public class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        Deque<TreeNode> stack = new ArrayDeque();
+        List<Integer> list = new ArrayList();
+        TreeNode cur = root;
+        TreeNode lastVisited = null;
+        while (!stack.isEmpty() || cur != null) {
+            if (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                // peek node is cur node
+                TreeNode peekNode = stack.peek();
+                // if this cur node has right child, and right child is not visited, go right
+                if (peekNode.right != null && peekNode.right != lastVisited) {
+                    cur = peekNode.right;
+                } else {
+                    // if right child has been visited, that means left and right are both visited
+                    // then visit current node
+                    lastVisited = stack.pop();
+                    list.add(lastVisited.val);
+                }
+            }
+        }
+        return list;
+    }
+}
+// using two stacks
+public class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList();
+        if (root == null) return res;
+        Stack<TreeNode> s1 = new Stack();
+        Stack<TreeNode> s2 = new Stack();
+        s1.push(root);
+        while (!s1.isEmpty()) {
+            TreeNode cur = s1.pop();
+            s2.push(cur);
+            
+            if (cur.left != null) {
+                s1.push(cur.left);
+            }
+            if (cur.right != null) {
+                s1.push(cur.right);
+            }
+        }
+        
+        while (!s2.isEmpty()) {
+            res.add(s2.pop().val);
+        }
+        return res;
+    }
+}
+
 
 // recursion:
 public class Solution {

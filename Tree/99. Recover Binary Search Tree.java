@@ -21,6 +21,8 @@ public class Solution {
                     tmp.right = node;
                     node = node.left;
                 } else {
+                    //----------- do something with current node below -------------
+                    
                     // find the two invalid nodes, first is too big, second is too small
                     if (node != null && pre.val > node.val) {
                         if (n1 == null) n1 = pre;
@@ -28,16 +30,22 @@ public class Solution {
                     }
                     pre = node;
                     
+                    //---------------------------------------------------------------
+                    
                     tmp.right = null; // break the connection we built before
                     node = node.right;
                 }
             } else {
+                //----------- do something with current node below -------------
+                
                 // find the two invalid nodes, first is too big, second is too small
                 if (pre != null && pre.val > node.val) {
                     if (n1 == null) n1 = pre;
                     n2 = node;
                 }
                 pre = node;
+                
+                //---------------------------------------------------------------
                 
                 node = node.right;
             }

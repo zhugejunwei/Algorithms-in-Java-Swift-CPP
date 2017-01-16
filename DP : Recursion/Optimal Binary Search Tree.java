@@ -1,3 +1,4 @@
+// DP solution:
 public int optimalSearchTree(int[] keys, int[] freq, int n) {
     int[][] cost = new int[n][n];
     
@@ -26,3 +27,5 @@ private int sum(int[] freq, int l, int r) {
     }
     return sum;
 }
+
+// 
