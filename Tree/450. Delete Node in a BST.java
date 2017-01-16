@@ -1,4 +1,4 @@
-// 8ms
+// iteration 8ms
 public class Solution {
     public TreeNode deleteNode(TreeNode root, int key) {
         if (root == null || root.val == key) return deleteRoot(root);
@@ -34,21 +34,30 @@ public class Solution {
 // recursion - 10ms
 public class Solution {
     public TreeNode deleteNode(TreeNode root, int key) {
-        if (root == null) return root;
-        if (root.val < key) root.right = deleteNode(root.right, key);
-        else if (root.val > key) root.left = deleteNode(root.left, key);
-        else {
-            if (root.left == null) return root.right;
-            else if (root.right == null) return root.left;
-            TreeNode minNode = findMin(root.right);
-            root.val = minNode.val;
-            root.right = deleteNode(root.right, root.val);
+        if (root == null) return null;
+        if (key > root.val) {
+            root.right = deleteNode(root.right, key);
+        } else if (key < root.val) {
+            root.left = deleteNode(root.left, key);
+        } else {
+            if (root.right == null || root.left == null) {
+                return root.left == null ? root.right : root.left;
+            } else {
+                // find the minimum node at the right side
+                TreeNode minNode = findMin(root.right);
+                // replace root with min node
+                root.val = minNode.val;
+                root.right = deleteNode(root.right, minNode.val);
+            }
         }
         return root;
     }
-    private TreeNode findMin(TreeNode root) {
-        TreeNode node = root;
-        while (node.left != null) node = node.left;
-        return node;
+    
+    private TreeNode findMin(TreeNode right) {
+        TreeNode minNode = right;
+        while (minNode.left != null) {
+            minNode = minNode.left;
+        }
+        return minNode;
     }
 }
