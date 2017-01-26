@@ -17,17 +17,17 @@ public class Solution {
 }
 
 // O(nlogn) binary seach
+
 public class Solution {
     public int findDuplicate(int[] nums) {
-        int n = nums.length - 1, l = 1, r = n;
+        int l = 1, r = nums.length - 1;
         while (l < r) {
             int mid = l + (r - l) / 2;
-            n >>>= 1;
             int countLeft = 0;
-            for (int num : nums) {
-                if (num <= mid) countLeft++;
+            for (int n : nums) {
+                if (n <= mid) countLeft++;
             }
-            if (countLeft <= mid) { // means there are no extra elements at the left side
+            if (countLeft <= mid) {
                 l = mid + 1;
             } else {
                 r = mid;

@@ -1,0 +1,17 @@
+1. 只要每个submatrix长和宽的比例都是原来matrix的长和宽的比例，切割成小submatrix
+
+2. 这题的条件应该是O(n),O(1)并且 unsorted 的吧。
+－ one missing num：一个方法是用totalsum－current sum，剩下的就是那个数
+－ two missing num：标记第i位为负数，最后答案是正数
+
+3. hasObstacle(Point, Dir)当前点的某个方向的下个位置有没有obs。
+
+
+
+
+
+最后一题：有n个office，输入是calendar，告诉你每个月各个office的一年内每个月holiday数量，
+	另外你有一个matrix cost，cost[i][j]表示从office i 到office j的travel cost，
+	constraint：有一个integer maxCost，你不能take a flight that costs more than that. 
+	然后每次travel必须是直达。要求输出一个path of size 12, where path[i]是你month i 
+		所在的office，so that you maximize the number of holidays you can take.

@@ -31,3 +31,38 @@ public class Solution {
         return validChar;
     }
 }
+
+// another solution
+
+public class Solution {
+    public String rearrangeString(String str, int k) {
+        StringBuilder sb = new StringBuilder();
+        Map<Character, Integer> map = new HashMap();
+        for (char c : str.toCharArray()) map.put(c, map.getOrDefault(c, 0) + 1);
+        
+        Queue<Map.Entry<Character, Integer>> maxHeap = new PriorityQueue<> (new Comparator<Map.Entry<Character, Integer>>(){
+            @Override
+            public int compare(Map.Entry<Character, Integer> entry1, Map.Entry<Character, Integer> entry2) {
+                return entry2.getValue() - entry1.getValue();
+            }
+        });
+        maxHeap.addAll(map.entrySet());
+        
+        Queue<Map.Entry<Character, Integer>> waitHeap = new ArrayDeque<>();
+        
+        while (!maxHeap.isEmpty()) {
+            Map.Entry<Character, Integer> cur = maxHeap.poll();
+            sb.append(cur.getKey());
+            cur.setValue(cur.getValue() - 1);
+            waitHeap.offer(cur);
+            // if the gap is less than k, keep going
+            if (waitHeap.size() < k) continue;
+            
+            Map.Entry<Character, Integer> next = waitHeap.poll();
+            if (next.getValue() > 0)
+                maxHeap.offer(next);
+        }
+        
+        return sb.length() == str.length() ? sb.toString() : "";
+    }
+}

@@ -21,6 +21,9 @@ public class Solution {
         ListNode res = null;
         ListNode cur = head;
         for (int n = 1; cur != null; n++) {
+            // int j = rand.nextInt(i + 1);
+            // if (j < k)
+            // here: i = 0, k = 1
             if (rd.nextInt(n) == 0) res = cur;
             cur = cur.next;
         }

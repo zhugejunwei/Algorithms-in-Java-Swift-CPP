@@ -26,7 +26,7 @@ public class Solution {
     }
 }
 
-// ============================= DP ============================//
+// ============================= DP right to left ============================//
 
 public class Solution {
     public boolean isMatch(String s, String p) {
@@ -37,6 +37,13 @@ public class Solution {
             if (p.charAt(i) != '*') break;
             else match[slen][i] = true;
         }
+        
+        /*
+         if p.charAt(j) == '*', dp[i][j] = true, if:
+         1. match zero element, dp[i][j + 1];
+         2. match at least one element, dp[i + 1][j]
+         */
+
         for (int i = slen - 1; i >= 0; i--) {
             for (int j = plen - 1; j >= 0; j--) {
                 if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?')
@@ -47,6 +54,27 @@ public class Solution {
             }
         }
         return match[0][0];
+    }
+}
+
+// DP left to right
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        int slen = s.length(), plen = p.length();
+        boolean[][] dp = new boolean[slen + 1][plen + 1];
+        dp[0][0] = true;
+        
+        for (int i = 0; i <= slen; i++) {
+            for (int j = 1; j <= plen; j++) {
+                if (p.charAt(j - 1) == '*') {
+                    dp[i][j] = (i > 0 && dp[i - 1][j]) || dp[i][j - 1];
+                } else {
+                    dp[i][j] = i > 0 && dp[i - 1][j - 1] && (p.charAt(j - 1) == '?' || p.charAt(j - 1) == s.charAt(i - 1));
+                }
+            }
+        }
+        
+        return dp[slen][plen];
     }
 }
 

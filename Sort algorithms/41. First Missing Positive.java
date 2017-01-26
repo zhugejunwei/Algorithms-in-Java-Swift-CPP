@@ -25,7 +25,7 @@ public class Solution {
     public int firstMissingPositive(int[] nums) {
         int n = nums.length;
         if (n == 0) return 1;
-        int k = partition(nums, 0, n - 1);
+        int k = partition(nums, 0, n - 1); // k == the count of positive numbers at the left side
         int tmp = 0;
         int res = k;
         for (int i = 0; i < k; i++) {

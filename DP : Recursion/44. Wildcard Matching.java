@@ -26,7 +26,7 @@ public class Solution {
     }
 }
 
-// DP
+// DP, right to left
 public class Solution {
     public boolean isMatch(String s, String p) {
         int slen = s.length(), plen = p.length();
@@ -51,5 +51,29 @@ public class Solution {
             }
         }
         return dp[0][0];
+    }
+}
+
+// dp, left to right
+
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        int slen = s.length(), plen = p.length();
+        boolean[][] dp = new boolean[slen + 1][plen + 1];
+        dp[0][0] = true;
+        
+        for (int i = 0; i <= slen; i++) {
+            for (int j = 1; j <= plen; j++) {
+                if (p.charAt(j - 1) == '*') {
+                    // dp[i][j - 1] ==> match zero
+                    // dp[i - 1][j] ==> match at least one
+                    dp[i][j] = (i > 0 && dp[i - 1][j]) || dp[i][j - 1];
+                } else {
+                    dp[i][j] = i > 0 && dp[i - 1][j - 1] && (p.charAt(j - 1) == '?' || p.charAt(j - 1) == s.charAt(i - 1));
+                }
+            }
+        }
+        
+        return dp[slen][plen];
     }
 }

@@ -1,31 +1,26 @@
 public class Solution {
     public int calculate(String s) {
-        if (s == null) return 0;
         s = s.replaceAll(" ", "");
-        int len = s.length();
-        
-        int res = 0, pre = 0, sign = '+', i = 0;
-        while (i < len) {
+        int res = 0, pre = 0, opt = '+', i = 0;
+        while (i < s.length()) {
             int cur = 0;
-            while (i < len && s.charAt(i) - '0' >= 0 && s.charAt(i) - '0' <= 9) {
+            while (i < s.length() && s.charAt(i) >= '0' && s.charAt(i) <= '9') {
                 cur = cur * 10 + s.charAt(i++) - '0';
             }
-            if (sign == '+') {
+            if (opt == '+') {
                 res += pre;
                 pre = cur;
-            } else if (sign == '-') {
+            } else if (opt == '-') {
                 res += pre;
                 pre = -cur;
-            } else if (sign == '*') {
+            } else if (opt == '*') {
                 pre *= cur;
-            } else if (sign == '/') {
+            } else if (opt == '/') {
                 pre /= cur;
             }
-            if (i < len) {
-                sign = s.charAt(i++);
-            }
+            if (i < s.length())
+                opt = s.charAt(i++);
         }
-        res += pre;
-        return res;
+        return res + pre;
     }
 }
