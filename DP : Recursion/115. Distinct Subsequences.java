@@ -1,20 +1,3 @@
-public class Solution {
-    public int numDistinct(String s, String t) {
-        int m = t.length(), n = s.length();
-        int[][] dp = new int[m + 1][n + 1];
-        
-        for (int j = 0; j <= n; ++j) dp[0][j] = 1;
-        for (int i = 1; i <= m; ++i) dp[i][0] = 0;
-        
-        for (int i = 1; i <= m; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                dp[i][j] = (s.charAt(j - 1) != t.charAt(i - 1)) ? dp[i][j-1] : (dp[i-1][j-1] + dp[i][j-1]);
-            }
-        }
-        return dp[m][n];
-    }
-}
-
 // excellent explanation
 
 /**
@@ -25,8 +8,8 @@ public class Solution {
  * T.substr(1...i) in S(1...j)
  *
  * Path[i][j] = Path[i][j-1]            (discard S[j])
- *              +     Path[i-1][j-1]    (S[j] == T[i] and we are going to use S[j])
- *                 or 0                 (S[j] != T[i] so we could not use S[j])
+ *              +     Path[i-1][j-1]    (s[j] == t[i] and we are going to use s[j])
+ *                 or 0                 (s[j] != t[i] so we could not use s[j])
  * while Path[0][j] = 1 and Path[i][0] = 0.
  */
 public class Solution {
@@ -40,5 +23,25 @@ public class Solution {
             }
         }
         return dp[n][m];
+    }
+}
+
+// same space
+
+public class Solution {
+    public int numDistinct(String s, String t) {
+        if (s == null || s.length() == 0) return 0;
+        int m = s.length(), n = t.length();
+        int[] pre = new int[m + 1];
+        int[] cur = new int[m + 1];
+        Arrays.fill(pre, 1);
+        
+        for (int i = 1; i <= n; i++) { // t
+            for (int j = 1; j <= m; j++) { // s
+                cur[j] = (s.charAt(j - 1) == t.charAt(i - 1)) ? cur[j - 1] + pre[j - 1] : cur[j - 1];
+            }
+            for (int j = 0; j <= m; j++) pre[j] = cur[j];
+        }
+        return cur[m];
     }
 }

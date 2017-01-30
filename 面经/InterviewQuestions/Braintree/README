@@ -1,0 +1,11 @@
+This project is coded within Eclipse Kepler using JRE7, in order to run it on other Eclipse, import path needs to be changed;
+
+Usage run this program and provide input as standard input in the following two ways:
+1. Provide the absolute location of the file containing Add, Charge and Credit command in a single line;
+2. Enter the Add, Charge and Credit commands line by line and use one empty line to finish (double press enter); 
+
+In this project, all the information is stored in a HashMap which use clients' name as key and Profile Object as value; the Profile Object contains client name, client card number, client balance, client account limit and if it is a valid card number;
+
+It is thread safe, so many thread can call this class's method to add and modify client accounts.
+
+I used Java for this project because I'm more skilled in writing Java code and also it is a good language to develop any kind of application. In developing more performance-sensitive and resources-sensitive code C++ might be a better choice.

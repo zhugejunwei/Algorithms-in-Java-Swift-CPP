@@ -6,22 +6,17 @@
 // third loop: k from i to j
 
 public class Solution {
-    public boolean wordBreak(String s, Set<String> wordDict) {
-        int n = s.length();
-        boolean[][] dp = new boolean[n][n];
-        for (int len = 1; len <= n; len++) {
-            for (int i = 0; i + len - 1 < n; i++) {
-                int j = i + len - 1;
-                if (wordDict.contains(s.substring(i, j + 1))) {
-                    dp[i][j] = true;
-                    continue;
-                }
-                for (int k = i; k < j; k++) {
-                    if (dp[i][k] && dp[k + 1][j]) dp[i][j] = true;
-                }
+    public boolean wordBreak(String s, List<String> wordDict) {
+        boolean[] dp = new boolean[s.length() + 1];
+        Set<String> dict = new HashSet(wordDict);
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = i - 1; j >= 0; j--) { // i-1->0 is faster than 0->i-1
+                dp[i] = dict.contains(s.substring(j, i)) && dp[j];
+                if (dp[i]) break;
             }
         }
-        return dp[0][n - 1];
+        return dp[s.length()];
     }
 }
 
