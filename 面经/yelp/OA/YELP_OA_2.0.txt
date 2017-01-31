@@ -8,12 +8,14 @@ General Questions
 5. HTTP端口号是多少，用什么协议。 我答：80, TCP
 
 binary search複雜度 1byte = __ bits 之類的 HTTP port number =?
-http port number啦difference between process&thread之类
+
+6. difference between process&thread
+Threads are used for small tasks, whereas processes are used for bigger tasks – basically the execution of applications. Another difference between a thread and a process is that threads within the same process share the same address space, whereas different processes do not.
 
 64bit的integer里有多少个byte
 octal的byte里有几个bit
 java unsigned int最大能表示多少
-binary search的时间复杂度. From 1point 3acres bbs
+binary search的时间复杂度. 
 binary search应该用sorted array还是linked list
 linked list头上插入一个元素，worst case时间复杂度
 SSL的全称
@@ -27,7 +29,7 @@ binary search应该用sorted array还是linked list sorted list
 linked list头上插入一个元素，worst case时间复杂度
 SSL的全称 secured scokets layer
 
-1. 怎么样提高数据库的搜索效率？. 1point3acres.com/bbs
+1. 怎么样提高数据库的搜索效率？
 2. 是不是越多index, 数据库效率越高？
 3. Java的garbage collector: 如果有两个object互相reference, 这两个object会不会回收？怎么回收？
 

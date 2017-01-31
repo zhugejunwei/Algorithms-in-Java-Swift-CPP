@@ -1,33 +1,33 @@
 public class Solution {
     public List<int[]> getSkyline(int[][] buildings) {
-        List<int[]> res = new ArrayList<>();
-        if (buildings.length == 0 || buildings[0].length == 0) return res;
-        List<int[]> heights = new ArrayList<>();
-        int n = buildings.length;
-        for (int[] b: buildings) {
-            heights.add(new int[]{b[0], -b[2]}); // li, h, using "-" to indicate it's a li
-            heights.add(new int[]{b[1], b[2]}); // ri, h
+        List<int[]> heights = new ArrayList();
+        for (int[] b : buildings) {
+            heights.add(new int[]{b[0], -b[2]}); // l, h
+            heights.add(new int[]{b[1], b[2]}); // r, h
         }
-        Collections.sort(heights, (a, b) -> (a[0] == b[0]) ? a[1] - b[1] : a[0] - b[0]);
-        
-        TreeMap<Integer, Integer> heightMap = new TreeMap<>();
-        heightMap.put(0, 1); // height, count
-        int pre = 0; // preHeight
+        Collections.sort(heights, (a, b) -> (a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]));
+        TreeMap<Integer,Integer> map = new TreeMap();
+        map.put(0, 1); // height : count
+        int pre = 0; // preheight
+        List<int[]> res = new ArrayList();
         for (int[] h : heights) {
-            if (h[1] < 0) { // if it's start
-                heightMap.compute(-h[1], (height, count) -> {
-                    if (count != null)  return count + 1;
+            if (h[1] < 0) { // if it's left, count++
+                map.compute(-h[1], (key, value) -> {
+                    if (value != null) return value + 1;
                     return 1;
                 });
-            } else {
-                heightMap.compute(h[1], (height, count) -> {
-                    if (count == 1) return null;
-                    return count - 1;
+            } else { // r, h
+                map.compute(h[1], (key, value) -> {
+                    if (value == 1) return null;
+                    return value - 1;
                 });
             }
-            int cur = heightMap.lastKey(); // curHeight
-            if (pre != cur) {
-                // use cur instead of height[1] is because height[1] coule be negative
+            // the last key is the biggest height
+            int cur = map.lastKey(); // current height
+            
+            // if the curheight is different with pre height, which means height is changed, than add this curheight to res
+            // use cur instead of height[1] is because height[1] coule be negative
+            if (cur != pre) {
                 res.add(new int[]{h[0], cur});
                 pre = cur;
             }

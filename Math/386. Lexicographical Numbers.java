@@ -21,3 +21,25 @@ public class Solution {
         return res;
     }
 }
+
+
+// DFS
+
+public class Solution {
+    public List<Integer> lexicalOrder(int n) {
+        List<Integer> res = new ArrayList();
+        for (int i = 1; i <= 9; i++)
+            helper(i, n, res);
+        return res;
+    }
+    
+    private void helper(int x, int n, List<Integer> res) {
+        if (res.size() == n) return;
+        res.add(x);
+        for (int i = 0; i < 10; i++) {
+            if (x * 10 + i <= n) {
+                helper(x * 10 + i, n, res);
+            }
+        }
+    }
+}

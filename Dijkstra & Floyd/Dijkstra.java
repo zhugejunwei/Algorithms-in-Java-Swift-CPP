@@ -21,10 +21,10 @@ class Dijkstra
         }
         dist[src] = 0;
         for (int count = 0; count < V - 1; count++) {
-            int u = minDist(dist, sptSet, V);
+            int u = minDist(dist, sptSet, V); // extract min
             sptSet[u] = true;
             
-            for (int v = 0; v < V; v++) {
+            for (int v = 0; v < V; v++) { // decrease key
                 if (!sptSet[v] && graph[u][v] != 0 && dist[u] != Integer.MAX_VALUE
                     && dist[u] + graph[u][v] < dist[v]) {
                     dist[v] = dist[u] + graph[u][v];

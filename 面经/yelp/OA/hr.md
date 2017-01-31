@@ -49,9 +49,8 @@ http://www.tutorialspoint.com/cplusplus/cpp_data_types.htm
 . visit 1point3acres.com for more.
 
 4. How many bits are required to represent an octal digit?
-- Number of digits needed to code an octet?
-8 in binary I know an Octet is a unit consisting of eight bits, up to 255.. 1point 3acres 
-- What if we're in base 8?
+- Number of digits needed to code an octet? 3
+- What if we're in base 8? 3
 http://stackoverflow.com/questions/19575629/how-many-digits-to-code-an-octet.
 
 
@@ -65,8 +64,7 @@ O(logn)
 7. Time complexity of adding a node at the head of the linked list.
 O(1)
 
-. From 1point 3acres bbs
-8. What is the signal number for kill
+8. What is the signal number for kill. -9
 http://meinit.nl/the-3-most-important-kill-signals-on-the-linux-unix-command-line
 
 

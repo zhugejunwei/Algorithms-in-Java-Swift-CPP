@@ -1,3 +1,4 @@
+// DFS 1
 public class Solution {
     int m, n;
     int min;
@@ -57,6 +58,131 @@ public class Solution {
             if (newR >= 0 && newR < m && newC < n && newC >= 0 && maze[newR][newC] == 0) {
                 move(r, c, step, route + dirc[i], i);
             }
+        }
+    }
+}
+
+// DFS 2
+public class Solution {
+    int minStep;
+    int m, n;
+    String res;
+    int[][] dirs = {{1, 0}, {0, 1}, {0, -1}, {-1, 0}};
+    String[] dirc = {"d", "r", "l", "u"}; // 0123
+    public String findShortestWay(int[][] maze, int[] ball, int[] hole) {
+        this.m = maze.length;
+        this.n = maze[0].length;
+        this.minStep = Integer.MAX_VALUE;
+        this.res = null;
+        boolean[][] vis = new boolean[m][n];
+        vis[ball[0]][ball[1]] = true;
+        
+        dfs(ball[0], ball[1], maze, hole, vis, "", 0);
+        
+        return res == null ? "impossible" : res;
+    }
+    
+    private void dfs(int i, int j, int[][] maze, int[] hole, boolean[][] vis, String route, int step) {
+        if (step > minStep) return;
+        if (i == hole[0] && j == hole[1]) {
+            if (step == minStep && route.compareTo(res) < 0) {
+                res = route;
+            } else if (step < minStep) {
+                minStep = step;
+                res = route;
+            }
+            vis[i][j] = false;
+            return;
+        }
+        
+        for (int d = 0; d < 4; d++) {
+            // roll to the wall
+            int x = i, y = j;
+            while (x + dirs[d][0] >= 0 && x + dirs[d][0] < m && y + dirs[d][1] >= 0 && y + dirs[d][1] < n
+                   && maze[x + dirs[d][0]][y + dirs[d][1]] != 1) {
+                x += dirs[d][0];
+                y += dirs[d][1];
+                if (x == hole[0] && y == hole[1] || vis[x][y])  break;
+            }
+            if (!vis[x][y] && maze[x][y] == 0) {
+                vis[x][y] = true;
+                dfs(x, y, maze, hole, vis, route + dirc[d], step + Math.abs(x - i) + Math.abs(y - j));
+                vis[x][y] = false;
+            }
+        }
+    }
+}
+
+// BFS
+public class Solution {
+    int[][] dirs = {{1, 0}, {0, -1}, {0, 1}, {-1, 0}};
+    char[] dirc = {'d', 'l', 'r', 'u'};
+    public String findShortestWay(int[][] maze, int[] ball, int[] hole) {
+        int m = maze.length, n = maze[0].length;
+        String minS = null;
+        int min = Integer.MAX_VALUE;
+        
+        int[][] map = new int[m][n]; // min distance till this node
+        for (int i = 0; i < m; i++) Arrays.fill(map[i], Integer.MAX_VALUE);
+        
+        Node start = new Node(ball[0], ball[1], 0, ""); // start point
+        PriorityQueue<Node> q = new PriorityQueue();
+        q.add(start);
+        
+        boolean[][] vis = new boolean[m][n]; // visited nodes
+        while (!q.isEmpty()) {
+            // extract min, get the cur position
+            Node cur = q.poll();
+            if (cur.x == hole[0] && cur.y == hole[1]) break;
+            vis[cur.x][cur.y] = true;
+            // try 4 dirs
+            for (int d = 0; d < 4; d++) {
+                int x = cur.x, y = cur.y;
+                
+                // start point, or get the end point
+                while (x + dirs[d][0] < m && x + dirs[d][0] >= 0 && y + dirs[d][1] < n && y + dirs[d][1] >= 0
+                       && maze[x + dirs[d][0]][y + dirs[d][1]] != 1) {
+                    x += dirs[d][0];
+                    y += dirs[d][1];
+                    if (vis[x][y] || (x == hole[0] && y == hole[1])) break;
+                }
+                int step = cur.step + Math.abs(x - cur.x) + Math.abs(y - cur.y);
+                if (vis[x][y] || step > map[x][y]) continue;
+                // update distance
+                map[x][y] = step;
+                // next node
+                Node next = new Node(x, y, step, cur.route + dirc[d]);
+                
+                // reach the end
+                if (x == hole[0] && y == hole[1]) {
+                    if (step == min && (minS == null || next.route.compareTo(minS) < 0)) {
+                        minS = next.route;
+                    } else if (step < min) {
+                        min = step;
+                        minS = next.route;
+                    }
+                    // if reach the end in this direction, we don't need to try other directions
+                    break;
+                }
+                
+                q.add(next);
+            }
+        }
+        return minS == null ? "impossible" : minS;
+    }
+    
+    class Node implements Comparable<Node> {
+        int x, y, step;
+        String route; // a string formed by directions along the way
+        public Node(int x, int y, int step, String route) {
+            this.x = x;
+            this.y = y;
+            this.step = step;
+            this.route = route;
+        }
+        
+        public int compareTo(Node that) {
+            return this.step - that.step;
         }
     }
 }
