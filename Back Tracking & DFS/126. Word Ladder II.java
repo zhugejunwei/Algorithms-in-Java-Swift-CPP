@@ -1,3 +1,66 @@
+// better style
+public class Solution {
+    Map<String, List<String>> graph = new HashMap();
+    public List<List<String>> findLadders(String begin, String end, List<String> wordList) {
+        List<List<String>> res = new ArrayList();
+        if (wordList == null || !wordList.contains(end)) return res;
+        Set<String> dict = new HashSet(wordList);
+        dict.remove(begin);
+        Queue<String> q = new ArrayDeque();
+        q.add(begin);
+        boolean found = false;
+        while (!q.isEmpty()) {
+            int level = q.size();
+            Set<String> vis = new HashSet();
+            while (level-- > 0) {
+                String cur = q.poll();
+                for (int i = 0; i < cur.length(); i++) {
+                    StringBuilder sb = new StringBuilder(cur);
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        sb.setCharAt(i, c);
+                        String newStr = sb.toString();
+                        if (!dict.contains(newStr)) continue;
+                        
+                        // skip duplicates
+                        if (vis.add(newStr)) q.add(newStr);
+                        
+                        if (graph.containsKey(newStr)) {
+                            graph.get(newStr).add(cur);
+                        } else {
+                            List<String> list = new ArrayList();
+                            list.add(cur);
+                            graph.put(newStr, list);
+                        }
+                        if (newStr.equals(end)) found = true;
+                    }
+                }
+            }
+            if (found) break;
+            dict.removeAll(vis);
+        }
+        
+        List<String> list = new ArrayList();
+        list.add(end);
+        routeHelper(begin, end, res, list);
+        return res;
+    }
+    
+    private void routeHelper(String begin, String end, List<List<String>> res, List<String> list) {
+        if (begin.equals(end)) {
+            res.add(new ArrayList(list));
+            return;
+        }
+        if (graph.containsKey(end))
+            for (String pre : graph.get(end)) {
+                list.add(0, pre);
+                routeHelper(begin, pre, res, list);
+                list.remove(0);
+            }
+    }
+}
+
+
+// origin style
 public class Solution {
     List<List<String>> res;
     Map<String, List<String>> map; // graph
@@ -67,3 +130,4 @@ public class Solution {
         list.removeFirst();
     }
 }
+

@@ -41,47 +41,47 @@ public class Solution {
 }
 
 // ====================== DFS =======================//
-
+// https://discuss.leetcode.com/topic/13873/two-ac-solution-in-java-using-bfs-and-dfs-with-explanation
 public class Solution {
-    // https://discuss.leetcode.com/topic/13873/two-ac-solution-in-java-using-bfs-and-dfs-with-explanation
     private int N = 0;
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] result = new int[numCourses];
+        int[] res = new int[numCourses];
+        // create Courses
         Course[] courses = new Course[numCourses];
         for (int i = 0; i < numCourses; i++) {
             courses[i] = new Course(i);
         }
-        for (int i = 0; i < prerequisites.length; i++) {   // init graph
-            courses[prerequisites[i][0]].add(courses[prerequisites[i][1]]);
+        // init graph
+        for (int[] pre : prerequisites) {
+            courses[pre[0]].add(courses[pre[1]]);
         }
+        // traverse graph
         for (int i = 0; i < numCourses; i++) {
-            if (isCycle(courses[i], result))
+            if (isCycle(courses[i], res))
                 return new int[0];
         }
-        return result;
+        return res;
     }
     
-    private boolean isCycle(Course cur, int[] result) {
-        if (cur.tested == true) return false;
-        if (cur.visited == true) return true;
-        cur.visited = true;
-        for (Course c : cur.pre) {
-            if (isCycle(c, result)) {
+    private boolean isCycle(Course c, int[] res) {
+        if (c.tested) return false;
+        if (c.visited) return true;
+        c.visited = true;
+        for (Course pre : c.pre) {
+            if (isCycle(pre, res))
                 return true;
-            }
         }
-        cur.tested = true;
-        result[N++] = cur.number;
+        c.tested = true;
+        res[N++] = c.id;
         return false;
     }
     
     class Course {
-        boolean visited = false;
-        boolean tested = false;
-        int number;
-        List<Course> pre = new ArrayList<Course>();
-        public Course(int i) {
-            number = i;
+        int id;
+        boolean tested, visited;
+        List<Course> pre = new ArrayList();
+        public Course(int id) {
+            this.id = id;
         }
         public void add(Course c) {
             pre.add(c);

@@ -38,3 +38,18 @@ public class Solution {
         return newHead;
     }
 }
+
+
+// recursion 3
+public class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        return helper(null, head, head.next);
+    }
+    
+    private ListNode helper(ListNode newHead, ListNode head, ListNode next) {
+        head.next = newHead;
+        if (next == null) return head;
+        return helper(head, next, next.next);
+    }
+}

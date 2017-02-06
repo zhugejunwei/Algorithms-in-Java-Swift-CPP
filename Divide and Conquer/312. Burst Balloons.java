@@ -1,4 +1,4 @@
-// top -> down
+// top -> down, this is faster
 
 public class Solution {
     public int maxCoins(int[] nums) {

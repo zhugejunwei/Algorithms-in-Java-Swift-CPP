@@ -175,13 +175,13 @@ public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
 
 // get predecessor of a given node in bst, "left" - root - right
 // left side, right most node
-public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+public TreeNode inorderPredecessor(TreeNode root, TreeNode p) {
     if (root == null) return null;
     
     if (root.val >= p.val) {
-        return inorderSuccessor(root.left, p);
+        return inorderPredecessor(root.left, p);
     } else {
-        TreeNode right = inorderSuccessor(root.right, p);
+        TreeNode right = inorderPredecessor(root.right, p);
         return right != null ? right : root;
     }
 }

@@ -1,18 +1,16 @@
-// recursion
+// recursion 1
 public class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         if (root == null || root.left == null) return root;
         TreeNode newRoot = upsideDownBinaryTree(root.left);
         root.left.left = root.right;
         root.left.right = root;
-        root.left = null;
-        root.right = null;
-        
+        root.left = root.right = null;
         return newRoot;
     }
 }
 
-// iteration
+// iteration 1
 public class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
         if (root == null || root.left == null) return root;
@@ -21,11 +19,28 @@ public class Solution {
             next = cur.left;
             cur.left = tmp;
             tmp = cur.right;
-            
             cur.right = pre;
             pre = cur;
-            
             cur = next;
+        }
+        return pre;
+    }
+}
+
+// iteration 2
+public class Solution {
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
+        if (root == null || root.left == null) return root;
+        TreeNode cur = root.left, right = root.right, pre = root;
+        root.left = root.right = null;
+        while (cur != null) {
+            TreeNode tmp = cur.right;
+            TreeNode next = cur.left;
+            cur.left = right;
+            cur.right = pre;
+            pre = cur;
+            cur = next;
+            right = tmp;
         }
         return pre;
     }

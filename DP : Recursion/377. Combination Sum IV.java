@@ -1,3 +1,5 @@
+// 如果有负数。得加个限制，每个元素最多只能用一次，因为｛1， －1｝这种情况，可以有无数个答案。负数和正数总是能有一个最小公倍数，LCM，也就是可以相加为0，那么就会有无数种解法。
+
 // dp
 public class Solution {
     public int combinationSum4(int[] nums, int target) {

@@ -73,11 +73,59 @@ public class Main
         }
         return "";
     }
+}
+
+
+
+
+// --------------- clear code --------------//
+
+public class Main {
+    public static String KMP(String text, String pattern) {
+        int n = text.length(), m = pattern.length();
+        int[] table = buildTable(m, pattern);
+        int i = 0, j = 0;
+        while (i < n) {
+            if (pattern.charAt(j) == text.charAt(i)) {
+                i++;
+                j++;
+                if (j == m) {
+                    int l = i - 1, r = i;
+                    while (l >= 0 && text.charAt(l) != ' ') l--;
+                    while (r < n && text.charAt(r) != ' ') r++;
+                    return text.substring(l + 1, r);
+                }
+            } else if (j > 0) j = table[j];
+            else i++;
+        }
+        return "";
+    }
+    
+    private static int[] buildTable(int m, String pat) {
+        int[] table = new int[m];
+        int j = 0;
+        for (int i = 1; i < pat.length(); i++) {
+            if (pat.charAt(i) == pat.charAt(j)) {
+                table[i] = ++j;
+            } else {
+                while (j > 0 && pat.charAt(j) != pat.charAt(i)) {
+                    j = table[j - 1];
+                }
+                if (pat.charAt(j) == pat.charAt(i)) {
+                    table[i] = ++j;
+                }
+            }
+        }
+        return table;
+    }
+    
     
     public static void main(String[] args) {
         String text = "hello world";
-        String pattern = "ell";
-        String res = Knuth_Morris_Pratt(text, pattern);
+        String pattern = "d";
+        //        String text = "ABABD ABACD ABABCABAB";
+        //        String pattern = "ABABCABAB";
+        String res = KMP(text, pattern);
         System.out.println(res); // "hello"
     }
 }

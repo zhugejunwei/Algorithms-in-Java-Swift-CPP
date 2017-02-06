@@ -26,7 +26,7 @@ public class Solution {
         helper(0, 0, wordLen, rows, res);
         return res;
     }
-    // row和col这里都是虚的概念，rows[]是个已经装好了所有word的数组，里面是每个word的letter。
+    // 每行为一个独立的root
     private void helper(int row, int col, int len, TrieNode[] rows, List<List<String>> res) {
         if (row == len && col == row) {
             List<String> list = new ArrayList<>();
@@ -50,6 +50,61 @@ public class Solution {
             }
         } else {
             helper(row + 1, row + 1, len, rows, res);
+        }
+    }
+}
+
+// a little bit faster
+public class Solution {
+    class TrieNode {
+        TrieNode[] next = new TrieNode[128];
+        String word = null;
+    }
+    
+    TrieNode root = new TrieNode();
+    private void buildTrie(String word) {
+        TrieNode node = root;
+        for (char c : word.toCharArray()) {
+            if (node.next[c] == null) node.next[c] = new TrieNode();
+            node = node.next[c];
+        }
+        node.word = word;
+    }
+    
+    public List<List<String>> wordSquares(String[] words) {
+        if (words == null || words.length == 0)
+            return new ArrayList();
+        for (String word : words) buildTrie(word);
+        int len = words[0].length();
+        
+        TrieNode[] rows = new TrieNode[len];
+        Arrays.fill(rows, root);
+        
+        List<List<String>> res = new ArrayList();
+        helper(rows, res, len, 0, 0);
+        return res;
+    }
+    
+    private void helper(TrieNode[] rows, List<List<String>> res, int len, int row, int col) {
+        if (row == col && col == len) {
+            List<String> list = new ArrayList();
+            for (int i = 0; i < len; i++) {
+                list.add(rows[i].word);
+            }
+            res.add(list);
+        } else if (col < len) {
+            TrieNode preRow = rows[row];
+            TrieNode preCol = rows[col];
+            for (char c = 'a'; c <= 'z'; c++) {
+                if (preRow.next[c] == null || preCol.next[c] == null) continue;
+                rows[row] = preRow.next[c];
+                rows[col] = preCol.next[c];
+                helper(rows, res, len, row, col + 1);
+            }
+            rows[row] = preRow;
+            rows[col] = preCol;
+        } else {
+            helper(rows, res, len, row + 1, row + 1);
         }
     }
 }

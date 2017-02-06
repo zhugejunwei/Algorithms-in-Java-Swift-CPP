@@ -26,7 +26,6 @@ public class Solution {
             int cur = map.lastKey(); // current height
             
             // if the curheight is different with pre height, which means height is changed, than add this curheight to res
-            // use cur instead of height[1] is because height[1] coule be negative
             if (cur != pre) {
                 res.add(new int[]{h[0], cur});
                 pre = cur;

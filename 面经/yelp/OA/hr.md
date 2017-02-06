@@ -48,7 +48,7 @@ two to the power of 32 minus one
 http://www.tutorialspoint.com/cplusplus/cpp_data_types.htm
 . visit 1point3acres.com for more.
 
-4. How many bits are required to represent an octal digit?
+4. How many bits are required to represent an octal digit? 8
 - Number of digits needed to code an octet? 3
 - What if we're in base 8? 3
 http://stackoverflow.com/questions/19575629/how-many-digits-to-code-an-octet.
@@ -85,6 +85,8 @@ ping IP/domain name
 11. How does the domain name map to ip address
 http://www.firewall.cx/networking-topics/protocols/domain-name-system-dns.html
 
+The Internet Domain Name Service (DNS) can translate host names into equivalent IP addresses and vice versa
+
 DNS is a very popular and well known protocol. It is used for resolving host names and domain names to IP addresses. The fact is that when you type www.firewall.cx the name is translated into an IP address via a number of queries that take place from your PC towards the DNS server. This DNS Query process (and more) is analysed in great depth in the articles that follow.
 
 
@@ -108,14 +110,12 @@ HTTP is an application layer protocol designed within the framework of the Inter
 
 
 14. Full form of SSL and what does it do?   
-SSL stands for Secure Socket Layer. The protocol's name is now officially TLS but we will continue to use SSL since that's the better known name.
+SSL stands for Secure Sockets Layer. The protocol's name is now officially Transport Layer Security (TLS) but we will continue to use SSL since that's the better known name.
 
 SSL was designed to permit web browsers and web servers to exchange sensitive information and prevent programs that could view the network traffic from reading the sensitive data.
--google 1point3acres
 
 
-
--number of bit in octal. 1point 3acres 
+-number of bit in octal. 
 -some command in linuz(grep, kill)
 -some sort complexity(binary)
 -adding element to first of linked list
@@ -125,7 +125,8 @@ SSL was designed to permit web browsers and web servers to exchange sensitive in
 
 - 3 adjectives coworkers would use to describe you?
 - Why would you want to work at Yelp?
-. From 1point 3acres bbs
+
+
 
 - Port number used by HTTP?
 - Protocol underneath HTTP?
@@ -135,9 +136,9 @@ SSL was designed to permit web browsers and web servers to exchange sensitive in
 - Number of digits needed to code an octet?
 - What if we're in base 8?
 - Number of bytes to code 64 bits?
-- What does SSL stands for and what does it do?. From 1point 3acres bbs
+- What does SSL stands for and what does it do?. 
 - What is the Linux kill signal?. 
-- Command to highlight the occurrence of a method in a file?
+- Command to highlight the occurrence of a method in a file? grep
 - Would you apply a binary search on a linked list or a sorted array?
 
 
