@@ -13,7 +13,8 @@ public class Solution {
             int space = 1, extra = 0;
             // not 1 word, not last line
             if (k != i + 1 && k != words.length) {
-                space = (L - len) / (k - i - 1) + 1; // +1 is for the original one space between words
+                // +1 is for the original one space between words， 这里的＋1是为了抵消上面算len时候多加的1
+                space = (L - len) / (k - i - 1) + 1;
                 extra = (L - len) % (k - i - 1);
             }
             // not 1 word, including last line, initialize space == 1 is to deal with last line case.
