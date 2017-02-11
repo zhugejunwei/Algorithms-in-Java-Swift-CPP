@@ -40,16 +40,16 @@ public class Solution {
 public class Solution {
     public int numDecodings(String s) {
         if (s == null || s.length() == 0) return 0;
+        int n = s.length();
         if (s.charAt(0) == '0') return 0;
         int pre = 1, res = 1;
-        for (int i = 1; i < s.length(); i++) {
+        for (int i = 1; i < n; i++) {
             int last = res;
-            int val = Integer.valueOf(s.substring(i - 1, i + 1));
-            if (s.charAt(i) == '0' && (s.charAt(i - 1) == '0' || s.charAt(i - 1) > '2')) return 0;
+            if (s.charAt(i) == '0' && s.charAt(i - 1) != '1' && s.charAt(i - 1) != '2') return 0;
+            int num = Integer.valueOf(s.substring(i - 1, i + 1));
             
             if (s.charAt(i) == '0') res = pre;
-            else if ((val >= 11 && val <= 19) || (val >= 21 && val <= 26)) res += pre;
-            
+            else if ((num >= 11 && num <= 19) || (num <= 26 && num >= 21)) res += pre;
             pre = last;
         }
         return res;

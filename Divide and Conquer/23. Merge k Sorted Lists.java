@@ -8,45 +8,35 @@
  */
 public class Solution {
     
-// divide and conquer ----- merge sort -------
-    public ListNode mergeKLists(ListNode[] lists) {
-        if (lists.length == 0 || lists == null) return null;
-        if (lists.length == 1) return lists[0];
-        return mergeLists(lists, 0, lists.length - 1);
-    }
-    
-    private ListNode mergeLists(ListNode[] lists, int start, int end) {
-        if (start == end) {
-            return lists[start];
-        } else if (start < end) {
-            int mid = (end - start) / 2 + start;
-            ListNode left = mergeLists(lists, start, mid);
-            ListNode right = mergeLists(lists, mid + 1, end);
-            return mergeTwoLists(left, right);
-        } else {
-            return null;
+    public class Solution {
+        public ListNode mergeKLists(ListNode[] lists) {
+            if (lists == null || lists.length == 0) return null;
+            if (lists.length == 1) return lists[0];
+            return helper(lists, 0, lists.length - 1);
         }
-    }
-    
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        if (l1 == null) return l2;
-        if (l2 == null) return l1;
         
-        ListNode head=null;
-        ListNode former=null;
-        while (l1!=null&&l2!=null) {
-            if (l1.val>l2.val) {
-                if (former==null) former=l2; else former.next=l2;
-                if (head==null) head=former; else former=former.next;
-                l2=l2.next;
-            } else {
-                if (former==null) former=l1; else former.next=l1;
-                if (head==null) head=former; else former=former.next;
-                l1=l1.next;
+        private ListNode helper(ListNode[] lists, int l, int r) {
+            if (l < r) {
+                int mid = l + (r - l)/2;
+                return merge(helper(lists, l, mid), helper(lists, mid + 1, r));
             }
+            return lists[l];
         }
-        if (l2!=null) l1=l2;
-        former.next=l1;
-        return head;
+        
+        private ListNode merge(ListNode l1, ListNode l2) {
+            ListNode res = new ListNode(0), tail = res;
+            while (l1 != null && l2 != null) {
+                if (l1.val < l2.val) {
+                    tail.next = new ListNode(l1.val);
+                    l1 = l1.next;
+                } else {
+                    tail.next = new ListNode(l2.val);
+                    l2 = l2.next;
+                }
+                tail = tail.next;
+            }
+            if (l1 != null) tail.next = l1;
+            if (l2 != null) tail.next = l2;
+            return res.next;
+        }
     }
-}

@@ -24,7 +24,7 @@ public class Solution {
 
 public class Solution {
     public int rob(TreeNode root) {
-        int[] res = robSub(root);
+        int[] res = robSub(root); // res[1]: rob, res[0]: not-rob
         return Math.max(res[0], res[1]);
     }
     

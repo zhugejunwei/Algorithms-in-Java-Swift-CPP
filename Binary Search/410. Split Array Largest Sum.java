@@ -41,9 +41,39 @@ public class Solution {
     }
 }
 
-/*
-依照例子，建二维数组6 by 2,第一行全为0，第二行开始第一列存累加到此行的和，
- 第二列存到此行的最小和，也就是最后一行的第二列将是返回值，
- 最小和就是对比当前值与依次考虑包含与不包含之前的每一个数的的和的最大值，存入较小的
-*/
 
+
+// DP solution
+// http://articles.leetcode.com/the-painters-partition-problem/
+public class Solution {
+    public int splitArray(int[] nums, int k) {
+        int n = nums.length;
+        int[][] dp = new int[n + 1][k + 1];
+        long[] sum = new long[n + 1];
+        
+        for (int i = 1; i <= n; i++) {
+            sum[i] = sum[i - 1] + nums[i - 1];
+        }
+        
+        // if there is only one painter
+        for (int i = 1; i <= n; i++) dp[i][1] = sum[i] > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)sum[i];
+        // if there is only one block
+        for (int j = 1; j <= k; j++) dp[1][j] = nums[0];
+        
+        for (int i = 2; i <= k; i++) {
+            for (int j = 2; j <= n; j++) {
+                int best = Integer.MAX_VALUE;
+                for (int p = 1; p <= j; p++) {
+                    /*
+                                      n              n-1
+                     M[n, k] = min { max { M[j, k-1], ∑ Ai } }
+                                     j=1             i=j
+                     */
+                    best = (int)Math.min(best, Math.max(dp[p][i-1], sum[j] - sum[p]));
+                }
+                dp[j][i] = best;
+            }
+        }
+        return dp[n][k];
+    }
+}

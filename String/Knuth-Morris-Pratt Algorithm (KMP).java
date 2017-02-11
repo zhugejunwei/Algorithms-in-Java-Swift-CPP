@@ -117,6 +117,18 @@ public class Main {
             }
         }
         return table;
+        /* another way to fill the table
+         int i = 1, j = 0;
+         while (i < len) {
+             if (s.charAt(i) == s.charAt(j)){
+                 lps[i++] = ++j;
+             } else if (j == 0) {
+                 lps[i++] = 0;
+             } else {
+                 j = lps[j - 1];
+             }
+         }
+         */
     }
     
     

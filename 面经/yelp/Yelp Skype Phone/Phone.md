@@ -1,23 +1,102 @@
-1. Return all words in the list with the prefix   that user searched for. And without traverse the list every time.
+https://github.com/dineshappavoo/ctgi/blob/master/src/com/ctgi/google/problems/questions/yelp_interview_questions.gl.py
+
+1. Return all words in the list with the prefix   that user searched for. And without traverse the list every time. 
+Ans: Trie
+
 2. You have an array with words. Print them by anagrams groups  
+Ans: LC 49. Group Anagrams
+
 3. Given two sparse Vectors, compute the Dot Product.
+Ans: a = [a1, a2, ..., an] and b = [b1, b2, ..., bn]
+    => a1b1 + a2b2+ ... anbn
+
 4. You have a user-submitted review (basically just a paragraph of 5ish sentences). Design and write an algorithm to break up the review into sentences, and put it in a list/array data structure. (The goal of this question, I think, was to see how you can cleverly figure out how to deal with non-standard punctuation) 
-5. Tell me what happens when you type yelp.com  
-6. I was asked to implement a function to take a collection of SET cards and identify a set if it exists or return a error status or something similar if it does not. This is according to the rules of teh game "SET" which you should look up for context
+Ans: 
+
+5. Tell me what happens when you type yelp.com ------------------- WTF --------------------
+Ans: 
+    - https://github.com/alex/what-happens-when
+    - https://www.reddit.com/r/programming/comments/2sqq7o/what_happens_when_you_type_googlecom_into_your/
+    - https://www.quora.com/What-are-the-series-of-steps-that-happen-when-an-URL-is-requested-from-the-address-field-of-a-browser
+    * The "g" key is pressed
+    * A KeyDown NSEvent is sent to the app
+    * Parse URL
+    * Is it a URL or a search term?
+    * Convert non-ASCII Unicode characters in hostname
+    * Check HSTS list
+    * DNS lookup
+    * ARP process
+    * Opening of a socket
+    * TLS handshake
+    * HTTP protocol
+    * HTTP Server Request Handle
+    * Behind the scenes of the Browser
+    * Browser
+    * HTML parsing
+    * CSS interpretation
+    * Page Rendering
+    * GPU Rendering
+    * Window Server
+    * Post-rendering and user-induced execution
+
+6. I was asked to implement a function to take a collection of SET cards and identify a set if it exists or return an error status or something similar if it does not. This is according to the rules of the game "SET" which you should look up for context
+
+
 7. Design LRU Cache 
+Ans: LC 146. LRU Cache
+
 8. Subtract two strings  
+Ans: subtract 2 strings.java
+
 9. Given a list of threads with a start time and finish time, determine all the threads with overlapping times
+Ans: Collections.sort(threads, (a, b) -> (a.start == b.start ? b.end - a.end : a.start - b.start))
+
 10. Given a string, print true or false if you can create a palindrome with it. 
+Ans: ...
+
 11. Create a cache for data on a webpage to avoid calling the server whenever possible.  
+Ans: LRU?
+
 How to implement a cache for yelp website. 
+Ans: 
+ - Proxy Cache
+Proxy caches work similarly to the browser cache. The primary differences are that proxy caches are shared caches that serve hundreds to thousands of clients instead of just one. So, if thousands of people visit a site while you are in a session on that same site, their requests won't be sent all the way to the web server. Rather, they will be serviced by the proxy server. The proxy settings can be either set in the preferences tab on your browser or they can be set automatically by the underlying network with intermediaries. Handling the "freshness" of the resource on the proxy server is an entirely different problem, but that challenge is beyond the scope of this article.
+
+ - Gateway Cache (http cache)
+Gateway caches are similar to intermediaries, but instead of being deployed by the network administrators to save bandwidth, they are usually managed by webmasters to make their web sites more reliable and scalable.
+
+
 12. How would you make a Spam detector for Yelp given all the data. Another binary search tree coding question.
+Ans: http://stats.stackexchange.com/questions/91177/machine-learning-techniques-for-spam-detection-and-in-general-for-text-classifi
+One basic technique is Naive Bayes, which is often used for spam filtering. Essentially, you look at the frequencies of words appearing in sentences that you have already judged to be spam, and also at the frequencies of those words appearing in sentences you have already judged to be not spam, and then use those frequencies to make a judgement about new sentences.
+
 13. implement regex 
+Ans: LC 10. Regular Expression Matching
+
 14. find the sum of two integers represented as strings, return the sum as string, i.e "123" and "456" would return "579". 
+Ans: add up two strings
+
 15. How to find the only different number in two unsorted arrays?
-16. How to design a request dispatcher for load balancing
+Ans: Bit mask
+
+16. How to design a request dispatcher for load balancing ----------------- WTF --------------------
+Ans: https://www.quora.com/How-do-I-design-a-request-dispatcher-for-load-balancing
+
 17. Write code to generate all possible case combinations of a given lower-cased string. (e.g. "0ab" -&gt; ["0ab", "0aB", "0Ab", "0AB"])  
+Ans: back tracking, "aA", "bB"...
+
 18. I only had one coding question that was to find the maximum number of segments that could fit on a number line given a list of segments. 
+Ans: DP?
+
 19. given an array of intervals, return max number of non-overlapping intervals  
+Ans: LC Intervals questions
+
 20. Longest Palindrome Substring 
+Ans: LC 5. Longest Palindromic Substring
+
 21. Split shifted linked list into two sorted lists.  
+Ans: ..
+
 22. It is about interval selecting. 
+Ans: LC Intervals questions
+

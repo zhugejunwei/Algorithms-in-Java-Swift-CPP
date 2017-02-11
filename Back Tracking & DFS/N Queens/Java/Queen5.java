@@ -22,7 +22,7 @@ public class Main {
             if (row == n - 1) {
                 count++;
             } else {
-                DFS(row + 1, shu ^ p, (pie ^ p) >> 1, (na ^ p) << 1);
+                DFS(row + 1, shu ^ p, (pie ^ p) << 1, (na ^ p) >> 1);
             }
         }
     }

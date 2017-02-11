@@ -43,7 +43,7 @@ public class Solution {
         while(k-- > 0)
         {
             if(secondIndex[index]>=nums2.length) index++;//if num2 has been fully travered for secondIndex[index] move on to next
-            minIndex = index; // let' start start with index
+            minIndex = index; // let' start with index
             /*
              for each value to nums1 get index of nums2 with last best index+1
              and consider it as minimum for the time being

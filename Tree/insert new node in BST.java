@@ -14,15 +14,15 @@ Node insert(Node node, int data) {
         Node temp = null;
         /* 2. Otherwise, recur down the tree */
         if (data <= node.data) {
-        temp = insert(node.left, data);
-        node.left = temp;
-        temp.parent = node;
-    } else {
-        temp = insert(node.right, data);
-        node.right = temp;
-        temp.parent = node;
-    }
-    /* return the (unchanged) node pointer */
-    return node;
+            temp = insert(node.left, data);
+            node.left = temp;
+            temp.parent = node;
+        } else {
+            temp = insert(node.right, data);
+            node.right = temp;
+            temp.parent = node;
+        }
+        /* return the (unchanged) node pointer */
+        return node;
     }
 }
