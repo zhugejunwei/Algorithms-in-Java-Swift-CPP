@@ -28,7 +28,7 @@ public class Solution {
     
     private void shuffle(int[] nums) {
         Random rand = new Random();
-        for (int i = 1; i < nums.length; i++) {
+        for (int i = nums.length - 1; i >= 1; i--) {
             int r = rand.nextInt(i + 1);
             if (nums[i] != nums[r]) swap(nums, i, r);
         }

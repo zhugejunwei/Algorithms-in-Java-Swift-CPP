@@ -1,0 +1,73 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fnil\fcharset134 PingFangSC-Regular;}
+{\colortbl;\red255\green255\blue255;\red67\green67\blue67;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 \expnd0\expndtw0\kerning0
+// interviewer email, subbu@uber.com\
+\
+// This is the text editor interface. \
+// Anything you type or change here will be seen by the other person in real time.\
+\
+/*\
+You are given a string, value, whose elements are brackets '(', ')', '\{', '\}', '[', ']'. Languages like Java, C or C++ usually utilize these brackets in balanced pairs, so the following rules are always followed:\
+\
+Every opening bracket has a corresponding closing bracket : '(' with ')', '\{' with '\}' and '[' with ']'.\
+\
+2 brackets form a pair if they have no open bracket of any type between them. - For example: '[\}]' is invalid, '[\{\}]' is valid.\
+\
+The closing bracket of a pair must be of the same type as the opening bracket, e.g. '( )' is valid, but '[ )' is not valid.\
+\
+Your task is to determine if a string of brackets, value, is valid or invalid by these criteria.\
+*/\
+\
+\
+import java.util.*;\
+\
+class Solution \{\
+    \
+    // candidate to implement the validate() method here..\
+    // () [] \{\}\
+    // left   right\
+    // left  right\
+    // right -> left is exist or not exist, how do we know left is exist\
+    // record left, memory\
+    // recorded left to check with right\
+    // "recorded left" -> data structure\
+    \
+    // left:  "acdasdfa][", \
+    // right: "0934uisjdfasdjf"\
+    \
+    public static boolean validate(String s) \{\
+        // Stack \
+        String left = "\{(["; //\
+        String right = "\}])"; //\
+        Map<Character, Character> map = new HashMap();\
+        map.put('\}', '\{');\
+        map.put(']', '[');\
+        map.put(')', '(');\
+        // \
+        Deque<Character> stack = new ArrayDeque();\
+        for (char c : s.toCharArray()) \{\
+            if (left.indexOf(c) != -1) \{ // left, left.indexOf(c)\
+                stack.push(c);\
+            \} else if (right.indexOf(c) != -1) \{ // right\
+                if (stack.isEmpty() || stack.pop() != map.get(c)) return false;\
+            \}\
+        \}\
+        return stack.isEmpty();\
+    \}\
+    \
+    public static void main(String... args) \{\
+        String[] inputs = \{"\{\}[]()", "\{[\}]", "[\{\}]" , "\{hello\}\{world\}", "hello)()", "\{\}(world"\};\
+        boolean[] expectedOutputs = \{true, false, true, true, false, false\};\
+        \
+        Solution solution = new Solution();\
+        for (int i = 0; i < inputs.length; i++) \{\
+            boolean success = solution.validate(inputs[i]) == expectedOutputs[i];\
+            // this line should always print "Success: true" if your validate() algorithm has no bugs..\
+            System.out.println("Success: " + success);\
+        \}\
+    \}\
+\}}

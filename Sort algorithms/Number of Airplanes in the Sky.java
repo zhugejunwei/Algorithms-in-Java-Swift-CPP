@@ -21,7 +21,7 @@ class Solution {
             list.add(new Point(it.end, 0));
         }
         
-        Collections.sort(list, new TimeComarator());
+        Collections.sort(list, new TimeComparator());
         
         int count = 0, res = 0;
         for (Point p : list) {
@@ -41,10 +41,34 @@ class Solution {
         }
     }
     
-    class TimeComarator implements Comparator<Point> {
+    class TimeComparator implements Comparator<Point> {
         @Override
         public int compare(Point a, Point b) {
             return a.time == b.time ? a.state - b.state : a.time - b.time;
         }
+    }
+}
+
+// greedy solution
+class Solution {
+    public int countOfAirplanes(List<Interval> airplanes) {
+        if (airplanes == null || airplanes.size() == 0) return 0;
+        Collections.sort(airplanes, new Comparator<Interval>(){
+            public int compare(Interval a, Interval b) {
+                return a.start == b.start? a.end - b.end : a.start - b.start;
+            }
+        });
+        PriorityQueue<Integer> q = new PriorityQueue();
+        
+        int mostAirplanes = 0;
+        for (int i = 0; i < airplanes.size(); i++) {
+            while (!q.isEmpty() && q.peek() <= airplanes.get(i).start) {
+                q.poll();
+            }
+            q.offer(airplanes.get(i).end);
+            mostAirplanes = Math.max(mostAirplanes, q.size());
+        }
+        
+        return mostAirplanes;
     }
 }

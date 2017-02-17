@@ -20,3 +20,25 @@ public class Solution {
         return res;
     }
 }
+
+
+// more reasonable
+public class Solution {
+    public int numberOfArithmeticSlices(int[] A) {
+        if (A == null || A.length == 0) return 0;
+        int[] dif = new int[A.length];
+        for (int i = 1; i < A.length; i++) {
+            dif[i] = A[i] - A[i - 1];
+        }
+        
+        int i = 1, res = 0;
+        while (i < A.length) {
+            int j = i + 1, count = 0;
+            while (j < A.length && dif[i] == dif[j]) j++;
+            count = j - i + 1;
+            res += (count - 1)*(count - 2)/2;
+            i = j;
+        }
+        return res;
+    }
+}

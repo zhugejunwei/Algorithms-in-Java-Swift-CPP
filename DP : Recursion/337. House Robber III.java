@@ -20,8 +20,27 @@ public class Solution {
     }
 }
 
-// DP
+// recursion + memo 2
+public class Solution {
+    Map<TreeNode, Integer> map = new HashMap();
+    public int rob(TreeNode root) {
+        if (root == null) return 0;
+        if (map.containsKey(root)) return map.get(root);
+        int left = 0, right = 0;
+        if (root.left != null) {
+            left += rob(root.left.left) + rob(root.left.right);
+        }
+        if (root.right != null) {
+            right += rob(root.right.left) + rob(root.right.right);
+        }
+        int res = Math.max(rob(root.left) + rob(root.right), left + right + root.val);
+        map.put(root, res);
+        return res;
+    }
+}
 
+
+// DP
 public class Solution {
     public int rob(TreeNode root) {
         int[] res = robSub(root); // res[1]: rob, res[0]: not-rob

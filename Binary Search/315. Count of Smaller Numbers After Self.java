@@ -1,49 +1,86 @@
+// same as 493. Reverse Pairs
 public class Solution {
-    class TreeNode {
-        int count = 1;
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int val) {
-            this.val = val;
-        }
-    }
-    
     public List<Integer> countSmaller(int[] nums) {
+        if (nums == null || nums.length == 0) return new ArrayList();
         List<Integer> res = new ArrayList();
-        int len = nums.length;
-        if (len == 0 || nums == null) return res;
-        TreeNode root = new TreeNode(nums[len - 1]);
         res.add(0);
-        for (int i = len - 2; i >= 0; i--) {
-            int count = insert(root, nums[i]);
-            res.add(count);
+        Node root = new Node(nums[nums.length - 1]);
+        for (int i = nums.length - 2; i >= 0; i--) {
+            buildTree(res, root, nums[i]);
         }
         Collections.reverse(res);
         return res;
     }
     
-    private int insert(TreeNode root, int val) {
+    private void buildTree(List<Integer> res, Node node, int target) {
         int count = 0;
         while (true) {
-            if (val <= root.val) {
-                root.count++;
-                if (root.left != null) {
-                    root = root.left;
-                } else {
-                    root.left = new TreeNode(val);
+            if (target > node.val) {
+                count += node.count;
+                if (node.right == null) {
+                    node.right = new Node(target);
                     break;
                 }
+                node = node.right;
             } else {
-                count += root.count;
-                if (root.right != null) {
-                    root = root.right;
-                } else {
-                    root.right = new TreeNode(val);
+                node.count++;
+                if (node.left == null) {
+                    node.left = new Node(target);
                     break;
                 }
+                node = node.left;
             }
         }
-        return count;
+        res.add(count);
+    }
+    
+    class Node {
+        int val;
+        int count = 1;
+        Node left, right;
+        public Node(int val) {
+            this.val = val;
+        }
+    }
+}
+
+// below is slower, because list.add(idx, val) is O(n) time
+public class Solution {
+    class Node {
+        int count = 1;
+        int val;
+        Node left, right;
+        public Node(int val) {
+            this.val = val;
+        }
+    }
+    
+    public List<Integer> countSmaller(int[] nums) {
+        if (nums == null || nums.length == 0) return new ArrayList();
+        Node root = new Node(nums[nums.length - 1]);
+        List<Integer> res = new ArrayList();
+        res.add(0);
+        for (int i = nums.length - 2; i >= 0; i--) {
+            boolean insert = false;
+            Node node = root;
+            int count = 0;
+            while (!insert) {
+                if (nums[i] > node.val) {
+                    count += node.count;
+                    if (node.right == null) {
+                        node.right = new Node(nums[i]);
+                        insert = true;
+                    } else node = node.right;
+                } else {
+                    node.count++;
+                    if (node.left == null) {
+                        node.left = new Node(nums[i]);
+                        insert = true;
+                    } else node = node.left;
+                }
+            }
+            res.add(0, count);
+        }
+        return res;
     }
 }

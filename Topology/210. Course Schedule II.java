@@ -40,6 +40,45 @@ public class Solution {
     }
 }
 
+// BFS 2
+public class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        if (numCourses == 0) return new int[0];
+        
+        // build graph
+        LinkedList<LinkedList<Integer>> graph = new LinkedList();
+        for (int i = 0; i < numCourses; i++) graph.add(new LinkedList());
+        int[] inDegree = new int[numCourses];
+        for (int[] pre : prerequisites) {
+            graph.get(pre[1]).add(pre[0]);
+            inDegree[pre[0]]++;
+        }
+        
+        int[] res = new int[numCourses];
+        
+        // solved by BFS
+        Queue<Integer> q = new ArrayDeque();
+        for (int i = 0; i < numCourses; i++) {
+            if (inDegree[i] == 0) q.offer(i);
+        }
+        
+        int idx = 0;
+        while (!q.isEmpty()) {
+            if (q.isEmpty()) return new int[0];
+            int cur = q.poll();
+            if (cur < 0 || cur >= numCourses) return new int[0];
+            res[idx++] = cur;
+            for (int next : graph.get(cur)) {
+                inDegree[next]--;
+                if (inDegree[next] == 0)
+                    q.offer(next);
+            }
+        }
+        
+        return idx == numCourses ? res : new int[0];
+    }
+}
+
 // ====================== DFS =======================//
 // https://discuss.leetcode.com/topic/13873/two-ac-solution-in-java-using-bfs-and-dfs-with-explanation
 public class Solution {

@@ -24,7 +24,7 @@ public class Solution {
                     //----------- do something with current node below -------------
                     
                     // find the two invalid nodes, first is too big, second is too small
-                    if (node != null && pre.val > node.val) {
+                    if (pre.val > node.val) {
                         if (n1 == null) n1 = pre;
                         n2 = node;
                     }
@@ -54,5 +54,27 @@ public class Solution {
         int temp = n1.val;
         n1.val = n2.val;
         n2.val = temp;
+    }
+}
+
+
+// O(n) solution
+public class Solution {
+    TreeNode n1 = null, n2 = null;
+    public void recoverTree(TreeNode root) {
+        helper(root, null);
+        int tmp = n1.val;
+        n1.val = n2.val;
+        n2.val = tmp;
+    }
+    
+    private TreeNode helper(TreeNode root, TreeNode pre) {
+        if (root == null) return pre;
+        pre = helper(root.left, pre);
+        if (pre != null && pre.val > root.val) {
+            if (n1 == null) n1 = pre;
+            n2 = root;
+        }
+        return helper(root.right, root);
     }
 }

@@ -1,32 +1,34 @@
-// Static block initialization
-public class StaticBlockSingleton {
-    private static StaticBlockSingleton instance;
+// static block initialization
+public class Singleton {
+    private static Singleton instance;
     
-    private StaticBlockSingleton(){};
+    private Singleton(){};
     
     //static block initialization for exception handling
+    // about static block: http://www.geeksforgeeks.org/g-fact-79/
     static {
         try {
-            instance = new StaticBlockSingleton();
+            instance = new Singleton;
         } catch (Exception e) {
             throw new RuntimeException("Exception occured in creating singleton instance");
         }
     }
     
-    public static StaticBlockSingleton getInstance() {
+    public static Single getInstance {
         return instance;
     }
 }
 
-// Lazy Initialization
-public class LazyInitializedSingleton {
-    private static LazyInitializedSingleton instance;
+
+// Lazy initialization
+public class Singleton {
+    private static Singleton instance;
     
-    private LazyInitializedSingleton(){};
+    private Singleton(){};
     
-    public static LazyInitializedSingleton getInstance() {
+    public static Singleton getInstance() {
         if (instance == null) {
-            instance = new LazyInitializedSingleton();
+            instance = new Singleton();
         }
         return instance;
     }

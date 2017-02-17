@@ -1,66 +1,57 @@
 public class Solution {
-    List<List<String>> res;
-    Map<String, List<String>> map; // graph
-    public List<List<String>> findLadders(String begin, String end, Set<String> dict) {
-        res = new ArrayList<List<String>>();
-        map = new HashMap();
-        Set<String> unvisited = new HashSet(dict);
-        Set<String> visited = new HashSet();
-        unvisited.add(end);
-        unvisited.remove(begin); // prevent duplicate
-        Queue<String> q = new ArrayDeque(); // bfs to build graph
-        q.add(begin);
-        int cur = 1, next = 0;
+    public List<List<String>> findLadders(String begin, String end, List<String> wordList) {
+        List<List<String>> res = new ArrayList();
+        Map<String, List<String>> graph = new HashMap();
+        Set<String> unvis = new HashSet(wordList);
+        unvis.remove(begin);
+        if (!unvis.contains(end)) return new ArrayList();
+        
+        Queue<String> q = new ArrayDeque();
+        q.offer(begin);
         boolean found = false;
         while (!q.isEmpty()) {
-            String word = q.poll();
-            cur--;
-            for (int i = 0; i < word.length(); i++) {
-                StringBuilder sb = new StringBuilder(word);
-                for (char c = 'a'; c <= 'z'; c++) {
-                    sb.setCharAt(i, c);
-                    String newWord = sb.toString();
-                    
-                    if (!unvisited.contains(newWord)) continue;
-                    
-                    if (visited.add(newWord)) {
-                        next++; // nextlevel length
-                        q.offer(newWord);
+            int size = q.size();
+            Set<String> nextLevel = new HashSet();
+            while (size-- > 0) {
+                String cur = q.poll();
+                for (int i = 0; i < cur.length(); i++) {
+                    StringBuilder sb = new StringBuilder(cur);
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        sb.setCharAt(i, c);
+                        String newWord = sb.toString();
+                        if (!unvis.contains(newWord)) continue;
+                        
+                        // skip duplicates
+                        if (nextLevel.add(newWord)) q.offer(newWord);
+                        
+                        if (!graph.containsKey(newWord))
+                            graph.put(newWord, new ArrayList());
+                        graph.get(newWord).add(cur);
+                        
+                        if (newWord.equals(end))
+                            found = true;
                     }
-                    
-                    // build adjacent graph
-                    if (map.containsKey(newWord)) {
-                        map.get(newWord).add(word);
-                    } else {
-                        LinkedList<String> l = new LinkedList();
-                        l.add(word);
-                        map.put(newWord, l);
-                    }
-                    if (newWord.equals(end)) found = true;
                 }
             }
-            if (cur == 0) { // if the cur level is over
-                if (found) break;
-                cur = next;
-                next = 0;
-                unvisited.removeAll(visited);
-            }
+            if (found) break;
+            unvis.removeAll(nextLevel);
         }
-        backTrack(end, begin, new LinkedList());
+        
+        helper(graph, res, end, begin, new LinkedList());
         return res;
     }
     
-    private void backTrack(String end, String begin, LinkedList<String> list) {
+    private void helper(Map<String, List<String>> graph, List<List<String>> res, String end, String begin, LinkedList<String> list) {
         if (begin.equals(end)) {
-            list.addFirst(begin);
+            list.addFirst(end);
             res.add(new LinkedList(list));
             list.removeFirst();
-            return;
         }
+        
         list.addFirst(end);
-        if (map.containsKey(end)) {
-            for (String word : map.get(end)) {
-                backTrack(word, begin, list);
+        if (graph.containsKey(end)) {
+            for (String pre : graph.get(end)) {
+                helper(graph, res, pre, begin, list);
             }
         }
         list.removeFirst();

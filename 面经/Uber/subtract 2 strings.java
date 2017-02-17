@@ -16,7 +16,6 @@ public class Main {
                 carry = 1;
             } else carry = 0;
             res = sub + res;
-            System.out.println(res);
         }
         
         // add leading extra numbers

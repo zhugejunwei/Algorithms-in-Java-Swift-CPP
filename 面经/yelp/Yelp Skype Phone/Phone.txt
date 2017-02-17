@@ -100,3 +100,18 @@ Ans: ..
 22. It is about interval selecting. 
 Ans: LC Intervals questions
 
+
+///
+闲聊：
+1. tell me about yourself
+2. 介绍一个project
+3. 问yelp可以如何改进: 
+	1). When I choose delivery, I need to type my address, I think it could be better if it can locate my address automatically. 
+	2). There are two search fields. one is in the first tab, the second one is in the second tab. It looks a little bit redundant. And I found that it's actually the same search field, when I typed in the first search field, it shows me the second one, which means it is real redundant. I know the purpose must be to make sure it is very convenient for costumers to search, but at the same time, it maybe cause confusion that people may be confused what's the difference between these two tabs, and they found out that it's actually the same after spending a short time discovery. 
+	3). When I try to order some food, it is better to show some comments at the bottom of the order page. 
+	4). When I click cancel, I was supposed to return to the prior page, instead of return to the main page. Yes, there is a "back" button in that page, but user's don't know, unless they made a mistake before, normally speaking, that's not good for an app, not an user-oriented design.
+
+
+Coding:
+1. LRU, MRU
+
