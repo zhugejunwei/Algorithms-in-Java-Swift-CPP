@@ -1,23 +1,35 @@
-// binary search, for many string s.
+// binary search, for many strings.
 //
 public class Solution {
     public boolean isSubsequence(String s, String t) {
-        if (s == null || s.length() == 0) return true;
-        List<Integer>[] map = new List[128];
+        List<Integer>[] cache = new List[128];
         for (int i = 0; i < t.length(); i++) {
-            char c = t.charAt(i);
-            if (map[c] == null)
-                map[c] = new ArrayList();
-            map[c].add(i);
+            if (cache[t.charAt(i)] == null)
+                cache[t.charAt(i)] = new ArrayList();
+            cache[t.charAt(i)].add(i);
         }
         
-        int pre = 0;
-        for (int i = 0; i < s.length(); i++) {
-            if (map[s.charAt(i)] == null) return false;
-            int j = Collections.binarySearch(map[s.charAt(i)], pre);
-            if (j < 0) j = -j - 1;
-            if (j == map[s.charAt(i)].size()) return false;
-            pre = map[s.charAt(i)].get(j) + 1;
+        int pre = 0, idx = 0;
+        for (char c : s.toCharArray()) {
+            if (cache[c] == null) return false;
+            idx = Collections.binarySearch(cache[c], pre);
+            if (idx < 0) idx = - idx - 1;
+            if (idx == cache[c].size()) return false; // not find
+            pre = cache[c].get(idx) + 1;
+        }
+        return true;
+    }
+}
+
+// fastest solution
+public class Solution {
+    public boolean isSubsequence(String s, String t) {
+        if (t.length() < s.length()) return false;
+        int preIdx = 0;
+        for (char cur : s.toCharArray()) {
+            preIdx = t.indexOf(cur, preIdx); // check whether cur char exists after pre char.
+            if (preIdx == -1) return false;
+            preIdx++;
         }
         return true;
     }

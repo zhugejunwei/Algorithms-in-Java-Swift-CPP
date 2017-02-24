@@ -5,7 +5,7 @@ public class Solution {
         for (int l = 0; l < n; l++) {
             int[] sums = new int[m];
             for (int r = l; r < n; r++) {
-                // calculate the rows sumsay for each col
+                // calculate the rows sum for each col
                 for (int i = 0; i < m; i++) {
                     sums[i] += matrix[i][r];
                 }

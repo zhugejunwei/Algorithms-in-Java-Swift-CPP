@@ -36,7 +36,7 @@ public class Solution {
             res[i] = q.peek().val;
             while (q.peek().val == res[i]) {
                 Num cur = q.poll();
-                q.offer(new Num(res[cur.idx] * cur.prime, cur.idx + 1, cur.prime));
+                q.offer(new Num(res[cur.idx + 1] * cur.prime, cur.idx + 1, cur.prime));
             }
         }
         return res[n - 1];

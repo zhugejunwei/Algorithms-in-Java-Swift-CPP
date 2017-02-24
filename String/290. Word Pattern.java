@@ -1,19 +1,17 @@
 public class Solution {
     public boolean wordPattern(String pattern, String str) {
         Map<Character, String> map = new HashMap();
+        Set<String> vis = new HashSet();
         String[] arr = str.split(" ");
-        Set<String> set = new HashSet();
-        if (arr.length != pattern.length()) return false;
-        int i = 0;
-        while (i < pattern.length()) {
-            if (!map.containsKey(pattern.charAt(i))) {
-                if (set.contains(arr[i])) return false;
-                map.put(pattern.charAt(i), arr[i]);
-                set.add(arr[i]);
-            } else {
-                if (!map.get(pattern.charAt(i)).equals(arr[i])) return false;
-            }
-            i++;
+        if (pattern.length() != arr.length) return false;
+        int len = arr.length;
+        for (int i = 0; i < len; i++) {
+            if (map.containsKey(pattern.charAt(i)) && !map.get(pattern.charAt(i)).equals(arr[i]))
+                return false;
+            if (!map.containsKey(pattern.charAt(i)) && vis.contains(arr[i]))
+                return false;
+            vis.add(arr[i]);
+            map.put(pattern.charAt(i), arr[i]);
         }
         return true;
     }
@@ -31,3 +29,4 @@ public class Solution {
         return true;
     }
 }
+

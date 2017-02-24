@@ -19,6 +19,8 @@ public class Solution {
     private void helper(Map<Integer, Integer> map, TreeNode root, int target, int sum) {
         if (root == null) return;
         sum += root.val;
+        
+        // sum - target = sum, sum - sum = target, so sum should not be in the map before check map.containsKey
         if (map.containsKey(sum - target)) res += map.get(sum - target);
         
         map.put(sum, map.getOrDefault(sum, 0) + 1);

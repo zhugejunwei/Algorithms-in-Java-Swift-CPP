@@ -74,8 +74,6 @@ public class Solution {
         }
         String reversed = new StringBuilder(s).reverse().toString();
         if (pare[0] == '(') {
-            // StringBuilder sb = new StringBuilder(s);
-            // s = sb.reverse().toString();
             DFS(reversed, res, 0, 0, new char[]{')', '('});
         } else {
             res.add(reversed);

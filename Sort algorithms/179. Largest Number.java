@@ -13,6 +13,8 @@ public class Solution {
                 return s2.compareTo(s1);
             }
         });
+        // Arrays.sort(arr, (a, b) -> (b + a).compareTo(a + b));
+        
         if (arr[0].charAt(0) == '0') return "0";
         
         StringBuilder sb = new StringBuilder();

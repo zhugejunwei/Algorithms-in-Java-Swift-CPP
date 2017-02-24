@@ -15,7 +15,9 @@ public class Solution {
             return isMatch(pat, i + 1, str, j + s.length(), map, set);
         }
         
-        for (int k = j; k < str.length(); k++) {
+        // add this constraint, speed up from 35% to 99%
+        // k < str.length() - pat.length() + i + 1
+        for (int k = j; k < str.length() - pat.length() + i + 1; k++) {
             String s = str.substring(j, k + 1);
             if (set.contains(s)) continue;
             set.add(s);

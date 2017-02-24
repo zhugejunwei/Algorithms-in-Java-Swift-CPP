@@ -1,61 +1,71 @@
 // better
 public class Solution {
-    int len;
-    char[] ss;
     public boolean canWin(String s) {
-        len = s.length();
-        ss = s.toCharArray();
-        return canWin();
+        return canWin(s.toCharArray());
     }
-    public boolean canWin() {
-        for (int i = 0; i + 2 <= len; ++i) {
-            if (ss[i] == '+' && ss[i + 1] == '+') {
-                // mark
-                ss[i] = '-'; ss[i + 1] = '-';
-                // recursion
-                boolean win = !canWin();
-                // clean
-                ss[i] = '+'; ss[i + 1] = '+';
+    private boolean canWin(char[] mark) {
+        for (int i = 0; i < mark.length - 1; i++) {
+            if (mark[i] == '+' && mark[i + 1] == '+') {
+                mark[i] = '-';
+                mark[i + 1] = '-';
+                // if other person cannot win, current person win.
+                boolean win = !canWin(mark);
+                mark[i] = '+';
+                mark[i + 1] = '+';
                 if (win) return true;
             }
         }
+        // current person cannot flip
         return false;
     }
 }
 
-// slower
+// with memo, faster
 public class Solution {
     public boolean canWin(String s) {
-        if (s.length() < 2 || s == null) return false;
-        for (int i = 0; i + 1 < s.length(); i++) {
-            if (s.startsWith("++", i)) {
-                String t = s.substring(0, i) + "--" + s.substring(i + 2);
-                
-                if (!canWin(t)) return true;
-            }
-        }
-        return false;
-    }
-}
-
-// same with the first solution
-public class Solution {
-    // If the next step cannot win, start person win;
-    public boolean canWin(String s) {
-        return canWin(s.toCharArray(), s.length());
+        return canWin(s.toCharArray(), new HashMap());
     }
     
-    private boolean canWin(char[] s, int len) {
-        for (int i = 0; i < len - 1; i++) {
-            if (s[i] == '+' && s[i+1] == '+') {
+    private boolean canWin(char[] s, Map<String, Boolean> map) {
+        String key = String.valueOf(s);
+        if (map.containsKey(key)) return map.get(key);
+        for (int i = 0; i < s.length - 1; i++) {
+            if (s[i] == '+' && s[i + 1] == '+') {
                 s[i] = '-';
-                s[i+1] = '-';
-                boolean win = !canWin(s, len);
+                s[i + 1] = '-';
+                boolean win = !canWin(s, map);
                 s[i] = '+';
-                s[i+1] = '+';
-                if (win) return true;
+                s[i + 1] = '+';
+                if (win) {
+                    map.put(String.valueOf(s), true);
+                    return true;
+                }
             }
         }
+        map.put(String.valueOf(s), false);
         return false;
+    }
+}
+
+// The solution below needs many theoretical concepts to understand.
+// https://discuss.leetcode.com/topic/27282/theory-matters-from-backtracking-128ms-to-dp-0ms/5
+public class Solution {
+    public boolean canWin(String s) {
+        s = s.replace('-', ' ');
+        int G = 0;
+        List<Integer> g = new ArrayList<>();
+        for (String t : s.split("[ ]+")) {
+            int p = t.length();
+            if (p == 0) continue;
+            while (g.size() <= p) {
+                char[] x = t.toCharArray();
+                int i = 0, j = g.size() - 2;
+                while (i <= j)
+                    x[g.get(i++) ^ g.get(j--)] = '-';
+                g.add(new String(x).indexOf('+'));
+            }
+            G ^= g.get(p);
+        }
+        return G != 0;
     }
 }

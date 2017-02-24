@@ -1,5 +1,8 @@
 // three-way partitioning:
 // https://en.wikipedia.org/wiki/Dutch_national_flag_problem#Pseudocode
+
+// explanation of this solution, how virtual index works:
+// https://discuss.leetcode.com/topic/32861/3-lines-python-with-explanation-proof/2
 public class Solution {
     public void wiggleSort(int[] nums) {
         int n = nums.length;

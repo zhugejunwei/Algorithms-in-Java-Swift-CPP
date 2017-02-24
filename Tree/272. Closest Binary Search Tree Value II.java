@@ -1,3 +1,4 @@
+// O(n) solution
 public class Solution {
     public List<Integer> closestKValues(TreeNode root, double target, int k) {
         List<Integer> res = new ArrayList();
@@ -30,16 +31,19 @@ public class Solution {
     }
 }
 
-// 
-
+// O(klog(n)) solution
 public class Solution {
     public List<Integer> closestKValues(TreeNode root, double target, int k) {
+        // find closest node
+        TreeNode closest = helper(root, target);
+        
+        // find results
         List<Integer> res = new ArrayList();
-        TreeNode closest = findClosestNode(root, target);
         res.add(closest.val);
-        TreeNode pre = getPredecessor(root, closest);
-        TreeNode suc = getSuccessor(root, closest);
-        while (k > 1) {
+        // pre node and suc node
+        TreeNode pre = getPredecessor(root, closest), suc = getSuccessor(root, closest);
+        
+        for (int i = 1; i < k; i++) {
             if (pre == null) {
                 res.add(suc.val);
                 suc = getSuccessor(root, suc);
@@ -47,51 +51,46 @@ public class Solution {
                 res.add(pre.val);
                 pre = getPredecessor(root, pre);
             } else {
-                if (Math.abs(pre.val - target) < Math.abs(suc.val - target)) {
-                    res.add(pre.val);
-                    pre = getPredecessor(root, pre);
-                } else {
+                if (Math.abs(pre.val - target) > Math.abs(suc.val - target)) {
                     res.add(suc.val);
                     suc = getSuccessor(root, suc);
+                } else {
+                    res.add(pre.val);
+                    pre = getPredecessor(root, pre);
                 }
             }
-            k--;
         }
         return res;
     }
     
-    private TreeNode findClosestNode(TreeNode root, double target) {
-        TreeNode closer = target > root.val ? root.right : root.left;
+    private TreeNode helper(TreeNode root, double target) {
+        TreeNode closer = root.val > target ? root.left : root.right;
         if (closer == null) return root;
-        TreeNode kid = findClosestNode(closer, target);
-        return Math.abs(kid.val - target) < Math.abs(root.val - target) ? kid : root;
+        TreeNode kid = helper(closer, target);
+        return Math.abs(root.val - target) < Math.abs(kid.val - target) ? root : kid;
     }
     
+    // "left", root, right
     private TreeNode getPredecessor(TreeNode root, TreeNode p) {
-        // left-side right most
         if (root == null) return null;
         
-        if (p.val >= root.val) {
-            // right most node in the leftside
-            return getPredecessor(root.right, p);
+        if (root.val >= p.val) {
+            return getPredecessor(root.left, p);
         } else {
-            // left side
-            TreeNode left = getPredecessor(root.left, p);
-            return left == null ? root : left;
+            TreeNode right = getPredecessor(root.right, p);
+            return right != null ? right : root;
         }
     }
     
+    // left, root, "right"
     private TreeNode getSuccessor(TreeNode root, TreeNode p) {
-        // right-side left most node
         if (root == null) return null;
         
-        if (p.val <= root.val) {
-            // left most node
-            return getSuccessor(root.left, p);
+        if (root.val <= p.val) {
+            return getSuccessor(root.right, p);
         } else {
-            // right side
-            TreeNode right = getSuccessor(root.right, p);
-            return right == null ? root : right;
+            TreeNode left = getSuccessor(root.left, p);
+            return left != null ? left : root;
         }
     }
 }

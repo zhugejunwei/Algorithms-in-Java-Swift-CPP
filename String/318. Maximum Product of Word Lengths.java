@@ -1,23 +1,22 @@
 public class Solution {
     public int maxProduct(String[] words) {
-        int n = words.length;
-        if (n < 2) return 0;
-        int max = 0;
-        int[] bitmask = new int[n];
-        int index = 0;
-        for (String w : words) {
-            for (int j = 0; j < w.length(); j++) {
-                bitmask[index] |= 1 << (w.charAt(j) - 'a'); // record a string
+        int res = 0;
+        int[] mask = new int[words.length];
+        for (int i = 0; i < words.length; i++) {
+            char[] arr = words[i].toCharArray();
+            for (int j = 0; j < arr.length; j++) {
+                mask[i] |= (1 << arr[j]);
             }
-            index++;
         }
-        for (int i = 1; i < n; i++) {
-            for (int j = 0; j < i; j++) {
-                if ((bitmask[i] & bitmask[j]) == 0) {
-                    max = Math.max(max, words[i].length() * words[j].length());
+        for (int i = 0; i < words.length; i++) {
+            for (int j = i + 1; j < words.length; j++) {
+                if ((mask[i] & mask[j]) == 0) { // no overlap
+                    int mult = words[i].length() * words[j].length();
+                    if (mult > res)
+                        res = mult;
                 }
             }
         }
-        return max;
+        return res;
     }
 }

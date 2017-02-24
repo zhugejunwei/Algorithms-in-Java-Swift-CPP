@@ -1,3 +1,20 @@
+// super simple solution
+public class Solution {
+    public int numDecodings(String s) {
+        if (s == null || s.length() == 0) return 0;
+        char[] nums = s.toCharArray();
+        int res = 1, pre = 1;
+        for (int i = 0; i < s.length(); i++) {
+            int last = res;
+            if (nums[i] == '0' && (i == 0 || (nums[i - 1] != '1' && nums[i - 1] != '2'))) return 0;
+            else if (nums[i] == '0') res = pre;
+            else if (i > 0 && (nums[i - 1] == '1' || (nums[i - 1] == '2' && nums[i] >= '1' && nums[i] <= '6'))) res += pre;
+            pre = last;
+        }
+        return res;
+    }
+}
+
 // O(n) space
 public class Solution {
     public int numDecodings(String s) {

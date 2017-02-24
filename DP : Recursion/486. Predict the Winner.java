@@ -1,4 +1,4 @@
-// DP, similar with burst balloon
+// DP1, similar with burst balloon
 public class Solution {
     public boolean PredictTheWinner(int[] nums) {
         int n = nums.length;
@@ -13,6 +13,33 @@ public class Solution {
         return dp[0][n - 1] >= 0;
     }
 }
+
+// DP2, maybe this is easier to understand
+public class Solution {
+    public boolean PredictTheWinner(int[] nums) {
+        int n = nums.length;
+        int[][] dp = new int[n][n];
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+            dp[i][i] = nums[i];
+        }
+        for (int len = 2; len <= n; len++) {
+            for (int i = 0; i + len <= n; i++) {
+                int j = i + len - 1;
+                if (i + 2 <= j) {
+                    int left = nums[i] + Math.min(dp[i + 2][j], dp[i + 1][j - 1]);
+                    int right = nums[j] + Math.min(dp[i + 1][j - 1], dp[i][j - 2]);
+                    dp[i][j] = Math.max(left, right);
+                } else {
+                    dp[i][j] = Math.max(nums[i], nums[j]);
+                }
+            }
+        }
+        return dp[0][n - 1] >= (sum + 1)/2;
+    }
+}
+
 
 // p1 选左边或者选右边，有一边赢就行，
 // p2 选左边或者选右边，p1都必须赢，要不然p2就会选p1会输的那一边
@@ -64,7 +91,7 @@ public class Solution {
     }
 }
 
-// DP
+// memo + recursion
 /*
  p1 picks nums[i], p2 picks max from nums[i+1]~nums[j], p1 picks the minimum number that p2 left after picks from nums[i+1]~nums[j], that is, min(helper(nums, i+1, j-1), helper(nums, i+2,j))
  */

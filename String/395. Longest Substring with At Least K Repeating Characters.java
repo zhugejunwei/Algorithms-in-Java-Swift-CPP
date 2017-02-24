@@ -1,23 +1,24 @@
+// DP
 public class Solution {
     public int longestSubstring(String s, int k) {
         int max = 0;
-        for (int f = 0; f + k <= s.length(); ) {
-            int[] count = new int[26];
-            count[0] = 0;
-            int mask = 0;
-            int maxLast = f;
-            for (int last = f; last < s.length(); ++last) {
-                int i = s.charAt(last) - 'a';
-                count[i]++;
-                if (count[i] < k) mask |= (1 << i);
-                else mask &= (~(1 << i));
+        char[] arr = s.toCharArray();
+        for (int i = 0; i + k <= s.length();) {
+            int[] count = new int[128];
+            int mask = 0, next = i;
+            for (int j = i; j < s.length(); j++) {
+                count[arr[j]]++;
                 
-                if (mask == 0) {
-                    max = Math.max(max, last - f + 1);
-                    maxLast = last;
+                // check whether there is a valid substring
+                if (count[arr[j]] < k) mask |= (1 << arr[j]);
+                else mask &= (~(1 << arr[j]));
+                
+                if (mask == 0) { // there is a valid substring
+                    max = Math.max(max, j - i + 1);
+                    next = j;
                 }
             }
-            f = maxLast + 1;
+            i = next + 1;
         }
         return max;
     }

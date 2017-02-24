@@ -9,3 +9,9 @@ public class Solution {
 }
 
 // bfs
+public class Solution {
+    public int minDepth(TreeNode root) {
+        if(root == null) return 0;
+        return root.left == null || root.right == null ? Math.max(minDepth(root.left), minDepth(root.right)) + 1 : Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+    }
+}

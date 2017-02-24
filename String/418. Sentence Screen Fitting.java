@@ -36,3 +36,22 @@ public class Solution {
         return start / len;
     }
 }
+
+// another way
+public class Solution {
+    public int wordsTyping(String[] sentence, int rows, int cols) {
+        String s = String.join(" ", sentence) + " ";
+        int len = s.length(), start = 0;
+        while (rows-- > 0) {
+            start += cols/len*len + cols%len-1;
+            if (s.charAt(start%len) == ' ') {
+                start++;
+            } else if (s.charAt((start + 1)%len) == ' ') {
+                start += 2;
+            } else {
+                while (start > 0 && s.charAt((start - 1)%len) != ' ') start--;
+            }
+        }
+        return start/len;
+    }
+}

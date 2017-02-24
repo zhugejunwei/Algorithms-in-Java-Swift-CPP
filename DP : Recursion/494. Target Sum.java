@@ -28,23 +28,23 @@ public class Solution {
  Find a subset P of nums such that sum(P) = (target + sum(nums)) / 2
  */
 public class Solution {
-    public int findTargetSumWays(int[] nums, int target) {
+    public int findTargetSumWays(int[] nums, int S) {
+        // sum1 - sum2 = S
+        // sum1 + sum2 + sum1 - sum2 = S + sum_total
+        // 2sum1 = S + sum_total
+        // sum1 = (S + sum_total)/2
         int sum = 0;
         for (int n : nums) sum += n;
-        if (target > sum || target < -sum || ((target + sum) & 1) != 0)
-            return 0;
-        return  subsetSum(nums, (sum + target) >>> 1);
-    }
-    
-    private int subsetSum(int[] nums, int target) {
-        int[] dp = new int[target + 1];
+        if ((sum + S) % 2 != 0 || sum < S) return 0;
+        sum = (sum + S)/2; // target
+        
+        int[] dp = new int[sum+1];
         dp[0] = 1;
-        for (int num : nums) {
-            for (int j = target; j >= num; j--) {
-                dp[j] += dp[j - num];
+        for (int n : nums) {
+            for (int i = sum; i >= n; i--) {
+                dp[i] += dp[i - n];
             }
         }
-        return dp[target];
+        return dp[sum];
     }
 }
-
