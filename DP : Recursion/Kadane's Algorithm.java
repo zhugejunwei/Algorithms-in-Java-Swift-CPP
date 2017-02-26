@@ -20,7 +20,6 @@ public static int Kadanes(int[] arr, int k) {
         sum += n;
         Integer ceiling = set.ceiling(sum - k);
         if (ceiling != null) res = Math.max(res, sum - ceiling);
-        System.out.println(sum);
         set.add(sum);
     }
     return res;
