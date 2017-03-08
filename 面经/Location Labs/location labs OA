@@ -1,0 +1,82 @@
+1.
+/*
+ * Complete the function below.
+ */
+
+    static String rollingString(String s, String[] operations) {
+        char[] s2c=s.toCharArray();
+        for(int i=0;i<operations.length;i++){
+            String[] pas=operations[i].split(" ");
+            int left=Integer.parseInt(pas[0]),right=Integer.parseInt(pas[1]);
+            if(pas[2].equals("L")){
+                for(int j=left;j<=right;j++){
+                    s2c[j]--;
+                    if(s2c[j]<'a')s2c[j]+=26;
+                }
+            }else{
+                for(int j=left;j<=right;j++){
+                    s2c[j]++;
+                    if(s2c[j]>'z')s2c[j]-=26;
+                }
+            }
+        }
+        return new String(s2c);
+    }
+
+
+2.
+/*
+ * Complete the function below.
+ */
+
+    static String canReach(int a, int b, int c, int d) {
+        while(c>=a&&d>=b){
+            if(c==a&&d==b)return "Yes";
+            if(d>c)d-=c;
+            else c-=d;
+        }
+        return "No";
+    }
+
+
+
+
+3.
+/*
+ * Complete the function below.
+ */
+
+    static int goodNodes(int[] points_to) {
+        for(int i=0;i<points_to.length;i++)points_to[i]--;
+        int[] copy=new int[points_to.length];
+        System.arraycopy(points_to,0,copy,0,points_to.length);
+        Set<Integer> set=new HashSet<Integer>();
+        for(int i=0;i<points_to.length;i++){
+            int a=i;
+            while(points_to[a]!=a){
+                points_to[a]=points_to[points_to[a]];
+                a=points_to[a];
+            }
+            set.add(a);
+        }
+        if(set.contains(0))return set.size()-1;
+        else{
+            int init=0,size=set.size();
+            int fast=copy[copy[0]],slow=copy[0];
+            while(fast!=slow){
+                fast=copy[copy[fast]];
+                slow=copy[slow];
+            }
+            int tmp=0;
+            Set<Integer> test=new HashSet<Integer>();
+            while(tmp!=slow){
+                test.add(tmp);
+                tmp=copy[tmp];
+                slow=copy[slow];
+            }
+            if(test.contains(0))return size;
+            return size-1;
+        } 
+    }
+
+

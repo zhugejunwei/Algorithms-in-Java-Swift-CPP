@@ -1,0 +1,363 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\fnil\fcharset134 PingFangSC-Regular;\f2\fnil\fcharset0 HelveticaNeue;
+\f3\fnil\fcharset0 HelveticaNeue-Medium;\f4\fswiss\fcharset0 Helvetica;\f5\fnil\fcharset0 Menlo-Regular;
+\f6\fnil\fcharset0 Menlo-Italic;\f7\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red184\green14\blue61;\red247\green238\blue241;
+\red128\green0\blue128;\red28\green0\blue207;\red0\green0\blue255;\red255\green0\blue255;\red0\green160\blue190;
+\red219\green44\blue56;\red191\green100\blue38;\red32\green32\blue32;\red153\green168\blue186;\red133\green96\blue154;
+\red88\green118\blue71;\red37\green127\blue159;\red235\green236\blue237;\red36\green38\blue41;\red13\green0\blue129;
+\red104\green26\blue29;\red43\green39\blue19;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf0 \shad\shadx0\shady32\shadr200\shado85 \shadc0 Algorithms!!
+\f1\b\fs36 \shad0 \
+
+\f0\b0\fs26 \
+\
+// 
+\f1 \'d3\'ce\'cf\'b7\'b1\'a3\'d6\'a4\'d3\'ae\'a3\'ba
+\f0 guarantee player1 win, 
+\f1 \'d2\'b2\'be\'cd\'ca\'c7\'b1\'a3\'d6\'a4\'b6\'d4\'ca\'d6\'ca\'e4\'a3\'ac\'c8\'e7\'b9\'fb\'b6\'d4\'ca\'d6\'d3\'ae\'b5\'c4\'bf\'c9\'c4\'dc\'d0\'d4\'ce\'aa0\'a3\'ac\'d2\'b2\'be\'cd\'ca\'c7\'ca\'d4\'b9\'fd\'cb\'f9\'d3\'d0\'b5\'c4\'bf\'c9\'c4\'dc\'a3\'ac\'b6\'d4\'ca\'d6\'b6\'bc\'b2\'bb\'bb\'e1\'d3\'ae\'a3\'ac\'c4\'c7\'c3\'b4p1\'be\'cd\'d2\'bb\'b6\'a8\'d3\'ae
+\f0 \
+\
+
+\b ## Dynamic Programming\
+
+\b0 1. boundary cases\
+2. general cases: \cf2 \expnd0\expndtw0\kerning0
+Suppose we have already known how to convert\cf3 \cb4 word1[0..i - 2]\cf2 \cb1  to \cf3 \cb4 word2[0..j - 2]\cf2 \cb1 , which is \cf3 \cb4 dp[i - 1][j - 1]\cf2 \cb1 . Now let's consider \cf3 \cb4 word[i - 1]\cf2 \cb1  and \cf3 \cb4 word2[j - 1]\cf2 \cb1 . If they are euqal, then no more operation is needed and \cf3 \cb4 dp[i][j] = dp[i - 1][j - 1]\cf2 \cb1 . Well, what if they are not equal?\
+\
+
+\f1 Veda\'b4\'f3\'c9\'f1\'bd\'e2\'cc\'e2\'cb\'bc\'c2\'b7\'b5\'c4\'be\'ad\'d1\'e9\'a3\'ba
+\f0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl-380\pardirnatural\partightenfactor0
+
+\f1\b\fs28 \cf5 \kerning1\expnd0\expndtw0 \'b6\'d4\'d3\'da
+\f2\fs26 n <= 16
+\f1 \'a3\'ac
+\fs28 \'d5\'d2
+\f2\fs26 2^n
+\f1\fs28 \'b5\'c4\'bd\'e2\'b7\'a8\'c8\'b7\'ca\'b5\'ca\'c7\'cc\'d7\'c2\'b7\'a1\'a3
+\f2\fs26 \
+n <= 200
+\f1 \'a3\'ac
+\fs28 \'d5\'d2
+\f2\fs26 n^3\
+n <= 3000
+\f1 \'a3\'ac
+\fs28 \'d5\'d2
+\f2\fs26 n^2\
+
+\f1\fs28 \'c6\'e4\'cb\'fb\'b5\'c4\'d5\'d2
+\f2\fs26 n * log(n)\
+
+\f1\fs28 \'d5\'e2\'ca\'c7\'ce\'d2\'d6\'ae\'c7\'b0\'d7\'f6\'cc\'e2\'b5\'c4\'be\'ad\'d1\'e9\'a1\'a3
+\f0\b0\fs26 \cf2 \expnd0\expndtw0\kerning0
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf2 \
+3. n % 4 ... \cf0 \kerning1\expnd0\expndtw0 \CocoaLigature0 (n & \cf6 0b11\cf0 ) , 
+\b Java 
+\f1 \'ce\'de\'b7\'fb\'ba\'c5\'d3\'d2\'d2\'c6\'d3\'c3 >>> 
+\f0\b0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf0 *** 
+\b palindrome problem
+\b0 : \'b4\'d3\'d6\'d0\'bc\'e4\'cf\'f2\'c1\'bd\'b1\'df\'d7\'df\'a3\'ac\
+i-j <-> i+j \'bb\'f2\'d5\'df i-j+1 <-> i+j\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0 \cf0 \
+
+\f1\b ## 
+\f0 dp 
+\f1\b0 \'d7\'b4\'cc\'ac\'a3\'ba
+\f0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf0 \'b3\'f5\'ca\'bc\'d7\'b4\'cc\'ac\'a3\'ac\'b1\'e4\'bb\'af\'ba\'f3\'b5\'c4\'d7\'b4\'cc\'ac
+\f0 \
+
+\f1 \'b7\'d6\'b3\'c92\'b8\'f6case\'a3\'ba\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\b \cf0 1. boundary case\'a3\'ac 2. general case
+\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\b \cf7 ->\cf0  
+\b0 i == 0, j != 0 \'b5\'c4\'ca\'b1\'ba\'f2\'a3\'ac\'cf\'c8\'bd\'e2\'be\'f6boundary case\'a3\'a8\'b1\'c8\'c8\'e7empty string\'a3\'acdp[i][0]\'a3\'a9\'a3\'acdp[i][0] = what, or dp[0][j] = what\
+\'c8\'bb\'ba\'f3\'ca\'c7\'d2\'bb\'b0\'e3\'b5\'c4\'c7\'e9\'bf\'f6\'a3\'a8\'b7\'c7\'bf\'d5string\'a3\'a9\'a3\'acconvert to smaller problems\'a3\'ba\
+
+\b \cf7 -> 
+\b0 \cf0 \'d2\'d1\'d6\'aahow to convert word1[0...i-2] to word2[0...j-2], which is dp[i-1][j-1]\'a3\'ac\'c4\'c7\'c3\'b4\'c8\'e7\'ba\'ce\'c7\'f3 word1[i - 1] to word2[j-1]\'c4\'d8\'a3\'bf\
+	
+\b 0. word1[i - 1] == word2[j-1],
+\b0  \'c4\'c7\'c3\'b4dp[i][j] = dp[i-1][j-1]\
+	
+\b 1. replace
+\b0 : \'bd\'abword1[i-1]\'cc\'e6\'b4\'fa\'b3\'c9word2[j-1], dp[i][j] = dp[i-1][j-1] + 1\
+	
+\b 2. delete: 
+\b0 \'bd\'abword1[i-1] \'c9\'be\'b3\'fd\'a3\'acword1[0...
+\b \cf8 i-2
+\b0 \cf0 ] == word2[0...
+\b \cf8 j-1
+\b0 \cf0 ], dp[i][j] = dp[\cf8 i-1\cf0 ][\cf8 j\cf0 ] + 1\
+	
+\b 3. insert: 
+\b0 \'d4\'daword1[i-1]\'ba\'f3\'d4\'f6\'bc\'d3word2[j-1], \'ca\'b9\'b5\'c3word1[0...i-1] + word2[j-1] == word2[0...j-1]\'a3\'ac\'c1\'bd\'b1\'df\'cd\'ac\'ca\'b1\'c9\'be\'b3\'fdword2[j-1]\'a3\'ac\'cb\'f9\'d2\'d4word1[0...i-1]  == word2[j-2]\'a3\'ac\'cb\'f9\'d2\'d4 dp[i][j] = dp[i][j\'a3\'ad1]\'a1\'a3\
+\
+\cf7 \'bd\'ab\'c9\'cf\'c3\'e6\'b5\'c4\'b8\'f7\'d6\'d6\'c7\'e9\'bf\'f6\'b7\'c5\'d2\'bb\'c6\'f0\'a3\'ba\cf0 \
+dp[i][0] = i;\
+dp[0][j] = j;\
+dp[i][j] = dp[i-1][j-1] (equal)\
+dp[i][j] = Math.min(\
+	dp[i-1][j-1] + 1 (replace)\
+	dp[i-1][j] + 1 (delete)\
+	dp[i][j-1] + 1 (insert)\
+	)\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0 \cf0 \
+
+\b ## Union Find\
+\
+## Backtracking\
+
+\b0 vis[] 
+\f1 \'bf\'c9\'d2\'d4\'b7\'b5\'bb\'d8\'d6\'ae\'c7\'b0\'b5\'c4\'ca\'fd\'a3\'ac permutation\'ce\'ca\'cc\'e2\
+\
+if(vis[i] || i > 0 && nums[i] == nums[i - 1] && !vis[i - 1]) continue; \'d4\'da\'b4\'d3\'cd\'b7\'b5\'bd\'ce\'b2\'b5\'c4permutation\'c0\'e0\'cb\'c6\'cc\'e2\'d6\'d0\'a3\'ac\'d3\'c3\'c0\'b4\'bd\'e2\'be\'f6\'bf\'c9\'d2\'d4\'d3\'d0\'d6\'d8\'b8\'b4\'ca\'fd\'d7\'d6\'a3\'ac\'b5\'ab\'b2\'bb\'c4\'dc\'d3\'d0\'d6\'d8\'b8\'b4\'b5\'c4 collection\
+
+\f0 \
+for (i = start; i < size; i++)\
+	dfs(... i + 1);\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf0 \'d3\'c3start\'d6\'bb\'c4\'dc\'cd\'f9\'ba\'f3\'d7\'df\'a3\'ac\'b2\'bb\'c4\'dc\'d6\'d8\'b8\'b4\'d6\'ae\'c7\'b0\'d7\'df\'b9\'fd\'b5\'c4\
+\
+if (i > start && nums[i] == nums[i - 1]) continue; \'c5\'c5\'b3\'fd\'d6\'bb\'c4\'dc\'cd\'f9\'ba\'f3\'d7\'df\'b5\'c4\'d0\'ce\'ca\'bd\'d6\'d0\'b5\'c4\'d6\'d8\'b8\'b4\'b5\'c4set\'a1\'a3\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0 \cf0 \
+\
+
+\b ## Binary Search\
+\
+## Divide and Conquer\
+
+\b0 \
+\
+\pard\pardeftab720\sl580\partightenfactor0
+
+\f3\fs48 \cf2 \expnd0\expndtw0\kerning0
+\CocoaLigature1 377. Combination Sum IV\
+
+\f1\fs26 \cf0 \kerning1\expnd0\expndtw0 \CocoaLigature0 \'d0\'f2\'c1\'d0\'cb\'b3\'d0\'f2matter 12\'ba\'cd21\'b2\'bb\'d2\'bb\'d1\'f9\
+comb[target] = sum(comb[target - num[i]])\
+comb[4] = comb[4-1] + comb[4-2] + comb[4-3]
+\f0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 \
+
+\b ## Graph\
+
+\b0 * Dijkstra's \
+* Floyd-Warshall\
+* Ford-Fulkerson\
+* Kruskal's
+\b \
+
+\b0 \
+
+\b ## Sorting
+\b0 \
+\
+
+\b ## Linked List\
+
+\b0 \
+
+\b ## greedy algorithm\
+
+\b0 * Kruskal's algorithm\
+* Dijkstra's shortest path algorithm\
+* Boruvka'a algorithm\
+* Prim's algorithm\
+* Reverse-delete algorithm\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f4\b\fs24 \cf0 \CocoaLigature1 Java Tips\
+
+\b0 1. int[] to ArrayList<Integer>:\
+\
+Arrays.stream(nums).boxed().collect(Collectors.toList());\
+\
+2. 
+\b Swift 
+\b0 char->Int \
+\pard\tx543\pardeftab543\pardirnatural\partightenfactor0
+
+\f5\fs22 \cf9 \CocoaLigature0 UnicodeScalar\cf1 (\cf10 "A"\cf1 ).\cf9 value\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f4\fs24 \cf0 \CocoaLigature1 3. don't use mid = (s + e)/2 \
+    use mid = s + (e - s)/2 instead\
+\
+4. string -> integer: parseInt(), parseDouble()\
+\
+5. split() string->string[]\
+\
+6. iterator hashmap()\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f5 \cf11 \cb12 for \cf13 (Map.Entry<String\cf11 , \cf13 String> entry : map.entrySet())\uc0\u8232 \{\u8232     System.
+\f6\i \cf14 out
+\f5\i0 \cf13 .println(entry.getKey() + \cf15 "/" \cf13 + entry.getValue())\cf11 ;\uc0\u8232 \cf13 \}\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f4 \cf0 \cb1 \
+7. list<>() 
+\f1 \'ca\'c7class\'a1\'a3\'b2\'bb\'c4\'dc\'d6\'d8\'b8\'b4\'ca\'b9\'d3\'c3\'cd\'ac\'d2\'bb\'b8\'f6 list\'a3\'ac\'d0\'de\'b8\'c4\'d6\'ae\'ba\'f3\'bb\'e1\'d3\'b0\'cf\'ec\'d6\'ae\'c7\'b0\'b5\'c4\'b4\'e6\'b4\'a2\'d0\'c5\'cf\'a2\'a1\'a3\
+\
+8. string to character\'a3\'db\'a3\'dd\
+\
+\pard\pardeftab720\sl300\partightenfactor0
+
+\f5\fs26 \cf16 \cb17 \expnd0\expndtw0\kerning0
+Character\cf18 [] array = \cf19 new\cf18  \cf16 Character\cf18 [len];\
+   \cf19 for\cf18  (\cf19 int\cf18  i = \cf20 0\cf18 ; i < len ; i++) \{\
+      array[i] = \cf19 new\cf18  \cf16 Character\cf18 (s.charAt(i));\
+   \}\cf21 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\'a3\'af\'a3\'af\'a3\'af\'a3\'af\'a3\'af\'a3\'af\
+\pard\pardeftab720\sl300\partightenfactor0
+
+\f5\fs26 \cf16 \cb17 \expnd0\expndtw0\kerning0
+String\cf18  str = \cf20 "testString"\cf18 ;\
+\cf19 char\cf18 [] charArray = str.toCharArray();\
+\cf16 Character\cf18 [] charObjectArray = \cf16 ArrayUtils\cf18 .toObject(charArray);\cf21 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 9. char to String\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f5\fs26 \cf16 \cb17 \expnd0\expndtw0\kerning0
+Character\cf18 .toString((\cf19 char\cf18 ) i)\
+\pard\pardeftab720\sl300\partightenfactor0
+\cf16 String\cf18 .valueOf(ch)\cf21 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf21 \
+10. 
+\f1 \'bd\'ab 
+\f5 LinkedList 
+\f1 \'b5\'f4\'cd\'b7\
+\
+11. Char -> integer:  Character.getNumericValue()
+\f5 \
+\
+12. split "integer" and "string" in a string into string[]\
+\
+// digits + string\
+String[] a = abbr.split("(?<=\\\\D)(?=\\\\d)");\
+\
+// string + digits\
+String[] a2 = a[i].split("(?<=\\\\d)(?=\\\\D)");\
+\
+13. random number in java\
+------------------\
+\pard\pardeftab720\sl300\partightenfactor0
+\cf16 Random\cf18  rand = \cf19 new\cf18  \cf16 Random\cf18 (); \
+\cf19 int\cf18  value = rand.nextInt(\cf20 50\cf18 ); \cf21 \
+------------------\
+\cf19 double\cf18  random = \cf16 Math\cf18 .random() * \cf20 50\cf18  + \cf20 1\cf18 ;\
+or\
+\cf19 int\cf18  random = (\cf19 int\cf18  )(\cf16 Math\cf18 .random() * \cf20 50\cf18  + \cf20 1\cf18 );\cf21 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf21 ------------------\
+\
+14. exchange two values:\
+\pard\pardeftab720\sl300\partightenfactor0
+\cf18 \
+      array[index] ^= array[i];\
+      array[i] ^= array[index];\
+      array[index] ^= array[i];\
+\cf21 \
+15. \
+new ArrayList(some HashSet)\
+\
+\cf16 Set\cf18 <T> mySet = \cf19 new\cf18  \cf16 HashSet\cf18 <T>(\cf16 Arrays\cf18 .asList(someArray));\cf21 \
+\
+\
+16. int[] array = res.stream().mapToInt(i->i).toArray();\
+\
+17. \
+Arrays.copyOf(src[], length)\
+System.arraycopy(src[], startidx, tar\
+[], startidx, len)\
+\
+\pard\pardeftab720\sl300\partightenfactor0
+
+\f7\b \cf21 18. sort((a,b) -> (a-b)) a,b 
+\f1 \'c9\'fd\'d0\'f2
+\f5\b0 \
+\
+\
+19. \
+Comparable<classname>\{\
+	@Override\
+	public int compareTo(class that) \{\
+		return this.val - that.val;\
+	\}\
+\}\
+\
+Comparator<classname> \{\
+	@Override\
+	public int compare(class a, class b) \{\
+		return a.val - b.val;\
+	\}\
+\}\
+\
+Arrays.sort(pre, new Comparator<int[]>\{\
+ @Override\
+ public int compare(int[] a, int[] b) \{\
+   return int.compare(a[1], b[1]);\
+ \}\
+\});\
+\
+PriorityQueue<Interval> q = new PriorityQueue<Interval>(new Comparator<Interval>() \{\
+            public int compare(Interval a, Interval b) \{\
+                return a.end - b.end;\
+            \} \
+        \});\
+\
+\
+20. list to array: \
+list.toArray(new int[people.length][2]);\
+\
+21. String[] arr = new String[0];\
+arr[0]\
+\
+22
+\f1 \'a1\'a3
+\f5  
+\f1 \'b8\'f9\'be\'ddstring\'d6\'d0\'ca\'fd\'d7\'d6\'b5\'c4\'b4\'f3\'d0\'a1\'c5\'c5\'d0\'f2\'a3\'ba\
+Arrays.sort(arr, new Comparator<String>()\{\
+            public int compare(String a, String b) \{\
+                String s1 = a + b, s2 = b + a;\
+                return s2.compareTo(s1);\
+            \}\
+        \});}
